@@ -1,0 +1,50 @@
+---
+import { countItems, sortByValue } from "@js/blogUtils";
+import { getAllTools } from "@js/toolsUtils";
+import { humanize, slugify } from "@js/textUtils";
+import { getLocaleFromUrl } from "@js/localeUtils";
+
+interface Props {
+  activeTag?: string | null;
+  showCount?: boolean;
+}
+
+const { activeTag = null, showCount = false } = Astro.props as Props;
+
+const currLocale = getLocaleFromUrl(Astro.url);
+const tools = await getAllTools(currLocale);
+const allTags = tools.flatMap((tool) => tool.data.tags ?? []);
+const countedTags = countItems(allTags);
+const processedTags = sortByValue(countedTags);
+
+const chipClass =
+  "button text-base-400 hover:bg-primary-100 hover:text-primary-600 focus-visible:ring-primary-500 focus-visible:ring-opacity-50 dark:hover:bg-primary-500 px-4 py-1 font-semibold focus-visible:ring-2 dark:hover:text-white";
+const activeClass =
+  "bg-primary-500 text-primary-foreground hover:bg-primary-600 hover:text-primary-foreground dark:hover:bg-primary-500 dark:hover:text-primary-foreground";
+---
+
+{
+  processedTags.length > 0 && (
+    <div class="flex flex-wrap justify-center gap-x-2 gap-y-2">
+      <a href="/tools" data-astro-reload class:list={[chipClass, !activeTag && activeClass]}>
+        All
+      </a>
+      {
+        processedTags.map(([tag, count]) => {
+          const slug = slugify(tag);
+          const isActive = activeTag === slug;
+          return (
+            <a
+              href={`/tools?tag=${slug}`}
+              data-astro-reload
+              class:list={[chipClass, isActive && activeClass]}
+            >
+              {humanize(tag)}
+              {showCount && <span class="text-xs opacity-70"> {count}</span>}
+            </a>
+          );
+        })
+      }
+    </div>
+  )
+}

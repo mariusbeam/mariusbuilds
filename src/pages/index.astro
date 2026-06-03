@@ -1,0 +1,39 @@
+---
+// layout
+import BaseLayout from "@layouts/BaseLayout.astro";
+
+// components
+import HeroSideImage from "@components/Hero/HeroSideImage.astro";
+
+import ServicesSideImage from "@components/Services/ServicesSideImage.astro";
+import FeatureCardsSmall from "@components/Feature/FeatureCardsSmall.astro";
+import FeatureCardsMedium from "@components/Feature/FeatureCardsMedium.astro";
+import HomepageBlogPreview from "@components/Feature/HomepageBlogPreview.astro";
+import HomepageToolsTeaser from "@components/Feature/HomepageToolsTeaser.astro";
+import CtaCardSplit from "@components/Cta/CtaCardSplit.astro";
+
+// utils
+import { getLocaleFromUrl } from "@js/localeUtils";
+import { getTranslatedData } from "@js/translationUtils";
+import { getHomepagePageData } from "@js/homepageUtils";
+
+const currLocale = getLocaleFromUrl(Astro.url);
+const siteData = getTranslatedData("siteData", currLocale);
+const homepage = await getHomepagePageData(currLocale);
+---
+
+<BaseLayout title={siteData.title} description={siteData.description}>
+  <HeroSideImage hero={homepage.hero} />
+
+  <FeatureCardsSmall content={homepage.beliefs} />
+
+  <FeatureCardsMedium content={homepage.howIWork} />
+
+  <ServicesSideImage content={homepage.mainServices} />
+
+  <HomepageBlogPreview content={homepage.blog} />
+
+  <HomepageToolsTeaser content={homepage.tools} />
+
+  <CtaCardSplit content={homepage.bottomCta} />
+</BaseLayout>

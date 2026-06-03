@@ -1,0 +1,74 @@
+---
+/**
+ * Medium icon cards. Theme demo defaults — pass `content` from the page for real copy.
+ */
+import FeatureCard from "@components/FeatureCard/FeatureCardMedium.astro";
+
+interface FeatureData {
+  icon: string;
+  title: string;
+  text: string;
+}
+
+interface SectionContent {
+  title?: string;
+  description?: string;
+  note?: string;
+  items: FeatureData[];
+}
+
+interface Props {
+  content?: SectionContent;
+}
+
+const themeDefault: SectionContent = {
+  items: [
+    {
+      icon: "tabler/paint",
+      title: "Professional quality",
+      text: "Our team of experienced painters uses high-quality materials and techniques to ensure a flawless finish that will last for years to come.",
+    },
+    {
+      icon: "tabler/heart",
+      title: "Fair prices",
+      text: "We believe that everyone deserves a beautifully painted space, and our commitment to affordability reflects that.",
+    },
+    {
+      icon: "tabler/clock",
+      title: "Fast service",
+      text: "We understand that time is of the essence, and we work efficiently without compromising quality.",
+    },
+  ],
+};
+
+const { content = themeDefault } = Astro.props as Props;
+const showHeader = Boolean(content.title);
+---
+
+<section
+  id="feature-cards-medium"
+  class="overflow-hidden bg-[url('/assets/pattern-light.svg')] bg-center bg-no-repeat py-12 md:py-20 dark:bg-[url('/assets/pattern-dark.svg')]"
+>
+  <div class="site-container">
+    {
+      showHeader && (
+        <div class="mx-auto mb-12 text-center md:mb-16 md:max-w-4xl" data-mos="fade-up">
+          <h2 class="h2 mb-4">{content.title}</h2>
+          {content.description && (
+            <p class="description text-lg text-pretty md:text-xl">{content.description}</p>
+          )}
+          {content.note && (
+            <p class="description mt-4 text-base italic">{content.note}</p>
+          )}
+        </div>
+      )
+    }
+    <div id="trigger-medium-cards" class="grid gap-4 md:grid-cols-3" data-mos="fade-left">
+      {
+        content.items.map((feature) => (
+          <FeatureCard title={feature.title} text={feature.text} icon={feature.icon} />
+        ))
+      }
+    </div>
+  </div>
+</section>

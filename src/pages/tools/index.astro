@@ -1,0 +1,95 @@
+---
+/** Query-string tag filter needs request-time rendering (not static HTML). */
+export const prerender = false;
+
+import BaseLayout from "@layouts/BaseLayout.astro";
+import ToolCard from "@components/ToolCard/ToolCard.astro";
+import ToolTagCloud from "@components/ToolTagCloud/ToolTagCloud.astro";
+import Badge from "@components/Badge/Badge.astro";
+import Button from "@components/Button/Button.astro";
+
+import { getAllTools, filterToolsByTag } from "@js/toolsUtils";
+import { getTranslatedData } from "@js/translationUtils";
+import { humanize } from "@js/textUtils";
+
+const siteData = getTranslatedData("siteData", "en");
+const allTools = await getAllTools("en");
+
+const activeTag = Astro.url.searchParams.get("tag");
+const tools = activeTag ? filterToolsByTag(allTools, activeTag) : allTools;
+
+const toolsByCategory = tools.reduce<Record<string, typeof tools>>((acc, tool) => {
+  const key = tool.data.category?.trim() || "Other";
+  if (!acc[key]) acc[key] = [];
+  acc[key].push(tool);
+  return acc;
+}, {});
+
+const categoryOrder = Object.keys(toolsByCategory).sort((a, b) => {
+  if (a === "Other") return 1;
+  if (b === "Other") return -1;
+  return a.localeCompare(b);
+});
+---
+
+<BaseLayout
+  title={`Tools | ${siteData.name}`}
+  description="Tools I actually use and recommend."
+>
+  <section class="site-container py-24 md:py-32">
+    <div class="mx-auto max-w-3xl text-center">
+      <Badge>Tools</Badge>
+      <h1 class="h1 mt-4 mb-6">Tools I actually use and recommend.</h1>
+      <p class="description text-lg text-pretty md:text-xl">
+        A short, opinionated directory. Filter by tag or browse everything.
+      </p>
+    </div>
+
+    <div class="mt-12">
+      <ToolTagCloud activeTag={activeTag} showCount={true} />
+    </div>
+
+    {
+      activeTag && (
+        <p class="description mt-8 text-center text-lg">
+          Showing tools tagged <span class="text-base-900 dark:text-white font-semibold">
+            {humanize(activeTag)}
+          </span>
+          —
+          <a class="text-primary-500 ml-1 underline" href="/tools" data-astro-reload>
+            show all
+          </a>
+        </p>
+      )
+    }
+
+    {
+      tools.length > 0 ? (
+        <div class="mt-12 space-y-14">
+          {categoryOrder.map((category) => (
+            <div>
+              <h2 class="h2 mb-6 text-center md:text-left">{humanize(category)}</h2>
+              <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                {toolsByCategory[category].map((tool) => (
+                  <ToolCard tool={tool} data-mos="fade-up" />
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <p class="description mt-16 text-center text-lg">
+          {activeTag
+            ? "No tools with this tag yet."
+            : "No tools listed yet. Add entries in the CMS under Favourite tools (EN)."}
+        </p>
+      )
+    }
+
+    <div class="mt-16 flex justify-center">
+      <Button variant="primary" class="!inline-flex !w-auto" href="/contact">
+        Let's talk
+      </Button>
+    </div>
+  </section>
+</BaseLayout>

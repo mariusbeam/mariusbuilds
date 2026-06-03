@@ -1,0 +1,58 @@
+---
+import Button from "@components/Button/Button.astro";
+import PostCard from "@components/PostCard/PostCardAtlas.astro";
+
+import { getAllPosts } from "@js/blogUtils";
+import { getLocaleFromUrl } from "@js/localeUtils";
+import { getLocalizedRoute } from "@js/translationUtils";
+
+interface TextBlock {
+  title: string;
+  description: string;
+  cta: string;
+  href: string;
+}
+
+interface Props {
+  content: TextBlock;
+  limit?: number;
+}
+
+const { content, limit = 4 } = Astro.props as Props;
+
+const currLocale = getLocaleFromUrl(Astro.url);
+const recentPosts = (await getAllPosts(currLocale)).slice(0, limit);
+const blogHref = getLocalizedRoute(currLocale, content.href);
+---
+
+<section
+  id="homepage-blog-preview"
+  class="bg-[url('/assets/pattern-light-big.svg')] bg-center bg-no-repeat py-24 md:py-28 dark:bg-[url('/assets/pattern-dark-big.svg')]"
+>
+  <div class="site-container">
+    <div class="mx-auto max-w-4xl text-center" data-mos="fade-up">
+      <h2 class="h2 mb-4">{content.title}</h2>
+      <p class="description text-lg text-pretty md:text-xl">{content.description}</p>
+    </div>
+
+    {
+      recentPosts.length > 0 ? (
+        <div class="mt-12 grid gap-8 gap-y-12 md:grid-cols-2">
+          {recentPosts.map((post) => (
+            <PostCard post={post} showDescription={true} data-mos="fade-up" />
+          ))}
+        </div>
+      ) : (
+        <p class="description mt-12 text-center text-lg">
+          No posts yet. Add articles in the CMS under Blog (EN).
+        </p>
+      )
+    }
+
+    <div class="mt-12 flex justify-center" data-mos="fade-up">
+      <Button variant="primary" href={blogHref} class="!inline-flex !w-auto">
+        {content.cta}
+      </Button>
+    </div>
+  </div>
+</section>

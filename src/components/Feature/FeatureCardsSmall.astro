@@ -1,0 +1,92 @@
+---
+/**
+ * Small icon cards section. Theme demo defaults — pass `content` from the page for real copy.
+ */
+import FeatureCard from "@components/FeatureCard/FeatureCardSmall.astro";
+import Badge from "@components/Badge/Badge.astro";
+
+interface FeatureData {
+  icon: string;
+  title: string;
+  text: string;
+}
+
+interface SectionContent {
+  badge?: string;
+  title: string;
+  description: string;
+  items: FeatureData[];
+}
+
+interface Props {
+  content?: SectionContent;
+}
+
+const themeDefault: SectionContent = {
+  badge: "Features",
+  title: "Gain more insight into how people use your",
+  description:
+    "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Corporis eius sunt autem esse delectus illo vel est optio omnis consectetur eos dignissimos.",
+  items: [
+    {
+      icon: "tabler/paint",
+      title: "Professional quality",
+      text: "Our team of experienced painters uses high-quality materials and techniques to ensure a flawless finish that will last for years to come.",
+    },
+    {
+      icon: "tabler/heart",
+      title: "Fair prices",
+      text: "We believe that everyone deserves a beautifully painted space, and our commitment to affordability reflects our dedication to making that a reality for our valued clients.",
+    },
+    {
+      icon: "tabler/clock",
+      title: "Fast service",
+      text: "We understand that time is of the essence, and we work efficiently to complete your project in a timely manner without compromising quality.",
+    },
+    {
+      icon: "tabler/list-check",
+      title: "Customer satisfaction",
+      text: "We prioritize customer satisfaction and work closely with our clients to ensure that their vision is brought to life.",
+    },
+    {
+      icon: "tabler/home-heart",
+      title: "Durability",
+      text: "We use high-quality materials and techniques to ensure that our paint jobs are durable and long-lasting.",
+    },
+    {
+      icon: "tabler/wand",
+      title: "Beautiful results",
+      text: "Our team of skilled painters has an eye for detail and a passion for creating beautiful spaces. We create stunning results that leave our clients thrilled.",
+    },
+  ],
+};
+
+const { content = themeDefault } = Astro.props as Props;
+---
+
+<section
+  id="feature-cards-small"
+  class="bg-[url('/assets/pattern-light.svg')] bg-center bg-no-repeat py-24 md:py-28 dark:bg-[url('/assets/pattern-dark.svg')]"
+>
+  <div class="site-container relative">
+    <div class="mx-auto mb-16 text-center md:max-w-4xl" data-mos="fade-up">
+      {content.badge && <Badge>{content.badge}</Badge>}
+      <h2 class="h2 mb-4">{content.title}</h2>
+      <p class="description text-lg text-pretty md:text-xl">{content.description}</p>
+    </div>
+    <div id="trigger-small-cards" class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        content.items.map((feature, idx) => (
+          <FeatureCard
+            title={feature.title}
+            text={feature.text}
+            icon={feature.icon}
+            data-mos="zoom-in"
+            data-mos-delay={0.15 * idx}
+            data-mos-anchor="#trigger-small-cards"
+          />
+        ))
+      }
+    </div>
+  </div>
+</section>

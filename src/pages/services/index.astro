@@ -1,0 +1,56 @@
+---
+import { Image } from "astro:assets";
+
+import BaseLayout from "@layouts/BaseLayout.astro";
+import Badge from "@components/Badge/Badge.astro";
+
+import { getAllServices } from "@js/servicesUtils";
+import { getTranslatedData } from "@js/translationUtils";
+
+const siteData = getTranslatedData("siteData", "en");
+const services = await getAllServices();
+---
+
+<BaseLayout title={`Services | ${siteData.name}`} description="Custom tools, AI consultancy, and websites.">
+  <section class="site-container py-24 md:py-32">
+    <div class="mx-auto max-w-3xl text-center">
+      <Badge>Services</Badge>
+      <h1 class="h1 mt-4 mb-6">My main services</h1>
+      <p class="description text-lg text-pretty md:text-xl">
+        What I help small businesses with — each with its own page if you want the full picture.
+      </p>
+    </div>
+
+    {
+      services.length > 0 ? (
+        <ul class="mx-auto mt-16 grid max-w-3xl gap-8">
+          {services.map((service) => (
+            <li class="dark:hover:bg-base-900 overflow-hidden rounded-md border border-base-200 transition hover:bg-white hover:shadow-md dark:border-base-800">
+              <a href={`/services/${service.id}/`} class="flex flex-col gap-6 p-6 sm:flex-row sm:items-center">
+                <Image
+                  src={service.data.image}
+                  alt=""
+                  width={400}
+                  class="aspect-video w-full rounded-md object-cover sm:w-40 sm:shrink-0"
+                />
+                <div class="text-left">
+                  <h2 class="text-base-900 dark:text-white text-xl font-bold">{service.data.title}</h2>
+                  <p class="description mt-2 text-pretty">
+                    {service.data.homepageBlurb?.trim() || service.data.description}
+                  </p>
+                  <span class="text-primary-500 mt-3 inline-block text-sm font-semibold">
+                    Read more →
+                  </span>
+                </div>
+              </a>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p class="description mt-16 text-center text-lg">
+          Service pages will appear here once you publish them in the CMS.
+        </p>
+      )
+    }
+  </section>
+</BaseLayout>

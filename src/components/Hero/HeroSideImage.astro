@@ -1,0 +1,111 @@
+---
+/**
+ * * Hero with background blobs and side image
+ */
+import { Image } from "astro:assets";
+import { Icon } from "astro-icon/components";
+
+// components
+import Button from "@components/Button/Button.astro";
+
+// utils
+import { getLocaleFromUrl } from "@js/localeUtils";
+import { getLocalizedRoute, useTranslations } from "@js/translationUtils";
+import type { HomepageHeroContent } from "@js/homepageUtils";
+import homepageFallback from "@config/en/homepageData";
+
+// images
+import heroImage from "@images/marius-2.webp";
+
+interface Props {
+  hero?: HomepageHeroContent;
+}
+
+const currLocale = getLocaleFromUrl(Astro.url);
+const t = useTranslations(currLocale);
+const { hero: heroProp } = Astro.props as Props;
+
+const hero: HomepageHeroContent = heroProp ?? {
+  badge: t("hero_badge") || homepageFallback.hero.badge,
+  title: t("hero_text") || homepageFallback.hero.title,
+  description: t("hero_description") || homepageFallback.hero.description,
+  cta: t("hero_cta") || homepageFallback.hero.cta,
+  ctaHref: homepageFallback.hero.ctaHref,
+};
+
+const ctaHref = hero.ctaHref.startsWith("http")
+  ? hero.ctaHref
+  : getLocalizedRoute(currLocale, hero.ctaHref);
+const isExternalCta = hero.ctaHref.startsWith("http");
+---
+
+<section
+  id="hero-side"
+  class="mt-20 overflow-clip bg-[url('/assets/pattern-light-big.svg')] bg-center bg-no-repeat dark:bg-[url('/assets/pattern-dark-big.svg')]"
+>
+  <div class="site-container mx-auto px-4 pt-10 pb-20 md:py-28">
+    <div class="-mx-4 flex flex-wrap xl:items-center">
+      <div class="mb-16 w-full px-4 md:mb-0 md:w-1/2">
+        <div data-mos="fade-right" data-mos-anchor="#hero-side">
+          {
+            hero.badge && (
+              <span class="bg-primary-500 text-primary-foreground mb-4 inline-flex items-center rounded-full px-3 py-1 text-sm leading-5 font-medium">
+                {hero.badge}
+              </span>
+            )
+          }
+
+          <h1
+            class="text-base-900 dark:text-white mb-6 text-3xl leading-tight font-bold tracking-tight text-pretty lg:text-5xl lg:leading-tight"
+          >
+            {hero.title}
+          </h1>
+        </div>
+        <p
+          class="description mb-8 text-lg text-pretty lg:text-xl"
+          data-mos="fade-right"
+          data-mos-delay=".1"
+          data-mos-anchor="#hero-side"
+        >
+          {hero.description}
+        </p>
+        <div
+          class="mt-6 flex flex-wrap gap-4"
+          data-mos="fade-right"
+          data-mos-delay=".2"
+          data-mos-anchor="#hero-side"
+        >
+          <Button
+            variant="primary"
+            href={ctaHref}
+            {...(isExternalCta ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+          >
+            {hero.cta}
+          </Button>
+        </div>
+      </div>
+      <div class="w-full px-4 md:w-1/2">
+        <div
+          class="relative mx-auto max-w-[420px]"
+          data-mos="fade-left"
+          data-mos-anchor="#hero-side"
+        >
+          <Icon
+            is:inline
+            name="atlas/dots3"
+            class="text-primary-500 absolute -right-7 -bottom-4 z-10 h-auto w-20 md:-bottom-8 md:w-28"
+            aria-hidden="true"
+          />
+          <Image
+            src={heroImage}
+            class="relative h-auto w-full rounded-2xl border border-transparent object-cover"
+            alt="Marius"
+            loading="eager"
+            width={420}
+            densities={[1.5, 2]}
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

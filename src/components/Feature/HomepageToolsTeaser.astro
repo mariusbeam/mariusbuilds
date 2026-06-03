@@ -1,0 +1,36 @@
+---
+import Button from "@components/Button/Button.astro";
+
+import { getLocaleFromUrl } from "@js/localeUtils";
+import { getLocalizedRoute } from "@js/translationUtils";
+
+interface TextBlock {
+  title: string;
+  description: string;
+  cta: string;
+  href: string;
+}
+
+interface Props {
+  content: TextBlock;
+}
+
+const { content } = Astro.props as Props;
+const currLocale = getLocaleFromUrl(Astro.url);
+---
+
+<section id="homepage-tools-teaser" class="site-container py-24 md:py-28">
+  <div class="mx-auto max-w-4xl text-center" data-mos="fade-up">
+    <h2 class="h2 mb-4">{content.title}</h2>
+    <p class="description text-lg text-pretty md:text-xl">{content.description}</p>
+    <div class="mt-6 flex justify-center">
+      <Button
+        variant="primary"
+        href={getLocalizedRoute(currLocale, content.href)}
+        class="!inline-flex !w-auto"
+      >
+        {content.cta}
+      </Button>
+    </div>
+  </div>
+</section>

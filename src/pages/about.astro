@@ -1,0 +1,83 @@
+---
+import { Image } from "astro:assets";
+
+import BaseLayout from "@layouts/BaseLayout.astro";
+import Badge from "@components/Badge/Badge.astro";
+import Button from "@components/Button/Button.astro";
+
+import { getLocaleFromUrl } from "@js/localeUtils";
+import { getTranslatedData, getLocalizedRoute } from "@js/translationUtils";
+import { getAboutPageData } from "@js/aboutUtils";
+
+import heroImage from "@images/marius-2.webp";
+
+const currLocale = getLocaleFromUrl(Astro.url);
+const siteData = getTranslatedData("siteData", currLocale);
+const about = await getAboutPageData(currLocale);
+
+const pageTitle = about.metaTitle.includes(siteData.name)
+  ? about.metaTitle
+  : `${about.metaTitle} | ${siteData.name}`;
+
+const ctaHref = about.bottomCta.buttonHref.startsWith("http")
+  ? about.bottomCta.buttonHref
+  : getLocalizedRoute(currLocale, about.bottomCta.buttonHref);
+const isExternalCta = about.bottomCta.buttonHref.startsWith("http");
+---
+
+<BaseLayout title={pageTitle} description={about.metaDescription}>
+  <section
+    class="site-container mt-20 overflow-x-clip bg-[url('/assets/pattern-light-big.svg')] bg-center bg-no-repeat py-16 md:py-24 dark:bg-[url('/assets/pattern-dark-big.svg')]"
+  >
+    <div class="-mx-4 flex flex-wrap items-center gap-12 xl:gap-16">
+      <div class="w-full px-4 md:w-1/2">
+        {about.hero.badge && <Badge>{about.hero.badge}</Badge>}
+        <h1 class="h1 text-pretty">{about.hero.title}</h1>
+        <p class="description mt-6 text-lg text-pretty md:text-xl">{about.hero.subhead}</p>
+      </div>
+      <div class="w-full px-4 md:w-1/2">
+        <div class="relative mx-auto max-w-[420px]">
+          <div class="overflow-hidden rounded-2xl">
+            <Image
+              src={heroImage}
+              class="h-auto w-full object-cover"
+              alt="Marius"
+              loading="eager"
+              width={420}
+              densities={[1.5, 2]}
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="site-container py-16 md:py-20">
+    <div class="mx-auto max-w-3xl">
+      <h2 class="h2 mb-8 text-center md:text-left">{about.story.title}</h2>
+      <div class="space-y-6">
+        {
+          about.story.paragraphs.map((paragraph) => (
+            <p class="description text-lg text-pretty leading-relaxed">{paragraph}</p>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="site-container pb-24 md:pb-32">
+    <div
+      class="border-base-200 dark:border-base-800 mx-auto max-w-3xl rounded-md border px-8 py-10 text-center md:px-12"
+    >
+      <p class="description mb-6 text-lg text-pretty md:text-xl">{about.bottomCta.leadIn}</p>
+      <Button
+        variant="primary"
+        class="!inline-flex !w-auto"
+        href={ctaHref}
+        {...(isExternalCta ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+      >
+        {about.bottomCta.buttonText}
+      </Button>
+    </div>
+  </section>
+</BaseLayout>

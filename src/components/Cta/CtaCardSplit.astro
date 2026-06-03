@@ -1,0 +1,82 @@
+---
+/**
+ * CTA split card. Theme demo defaults — pass `content` from the page for real copy.
+ */
+
+import { Icon } from "astro-icon/components";
+
+import Button from "@components/Button/Button.astro";
+
+import { getLocaleFromUrl } from "@js/localeUtils";
+import { getLocalizedRoute } from "@js/translationUtils";
+
+interface CtaContent {
+  title: string;
+  description: string;
+  cta: string;
+  href: string;
+}
+
+interface Props {
+  content?: CtaContent;
+}
+
+const themeDefault: CtaContent = {
+  title: "What are you waiting for? Get started today.",
+  description: "Level up with this theme.",
+  cta: "Get Atlas",
+  href: "https://cosmicthemes.com/themes/atlas/",
+};
+
+const { content = themeDefault } = Astro.props as Props;
+const currLocale = getLocaleFromUrl(Astro.url);
+const isExternal = content.href.startsWith("http");
+---
+
+<section class="py-10">
+  <div class="site-container">
+    <div class="bg-primary-500 relative overflow-hidden rounded-md px-16 py-11 md:py-20">
+      <Icon
+        name="atlas/dots3"
+        class="text-accent-4 absolute top-0 left-4 z-10 size-16"
+        aria-hidden="true"
+      />
+      <Icon
+        name="atlas/dots3"
+        class="text-accent-4 absolute right-4 bottom-0 z-10 size-16"
+        aria-hidden="true"
+      />
+      <Icon
+        name="atlas/wave-bg-basic"
+        class="absolute top-1/2 left-1/2 h-full w-auto -translate-x-1/2 -translate-y-1/2 object-cover text-black/5"
+        aria-hidden="true"
+      />
+
+      <div class="relative z-20 -m-3 flex flex-wrap items-center">
+        <div class="w-full p-3 md:w-2/3">
+          <h2
+            class="mb-6 text-3xl font-bold tracking-tighter text-[#1c232d] text-pretty md:text-4xl"
+          >
+            {content.title}
+          </h2>
+          <p
+            class="text-base leading-relaxed font-medium text-[#1c232d] text-pretty md:text-lg"
+          >
+            {content.description}
+          </p>
+        </div>
+        <div class="flex w-full p-3 md:w-1/3 md:justify-end">
+          <Button
+            variant="primary"
+            href={isExternal ? content.href : getLocalizedRoute(currLocale, content.href)}
+            target={isExternal ? "_blank" : undefined}
+            rel={isExternal ? "noopener noreferrer" : undefined}
+            class="!border-none !bg-[#1c232d] !text-primary-500 shadow-none hover:!bg-[#252d3d] hover:!text-primary-500"
+          >
+            {content.cta}
+          </Button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

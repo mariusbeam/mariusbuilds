@@ -1,0 +1,11 @@
+/**
+ * Load fonts via package imports so Vite resolves file URLs correctly.
+ * Do not use url(@fontsource/...) — that becomes /@fontsource/... in the browser,
+ * which Astro's [...page] catch-all treats as a page and returns 404 HTML.
+ */
+@import "@fontsource/zain/latin-400.css";
+@import "@fontsource/zain/latin-700.css";
+@import "@fontsource/nunito/latin-400.css";
+@import "@fontsource/nunito/latin-500.css";
+@import "@fontsource/nunito/latin-600.css";
+@import "@fontsource/nunito/latin-700.css";

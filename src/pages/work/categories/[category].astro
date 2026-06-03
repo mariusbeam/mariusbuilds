@@ -1,0 +1,65 @@
+---
+import { type InferGetStaticParamsType } from "astro";
+
+import BaseLayout from "@layouts/BaseLayout.astro";
+import WorkCategoryCloud from "@components/CategoryCloud/WorkCategoryCloud.astro";
+import Badge from "@components/Badge/Badge.astro";
+import WorkPostCard from "@components/PostCard/WorkPostCard.astro";
+
+import { getAllWork } from "@js/workUtils";
+import { countItems, sortByValue } from "@js/blogUtils";
+import { slugify, humanize } from "@js/textUtils";
+import { getLocaleFromUrl } from "@js/localeUtils";
+import { defaultLocale } from "@config/siteSettings.json";
+
+export async function getStaticPaths() {
+  const posts = await getAllWork(defaultLocale);
+  const allCategories = posts.map((post) => post.data.categories).flat();
+  const countedCategories = countItems(allCategories);
+  const processedCategories = sortByValue(countedCategories);
+
+  return processedCategories.map(([category]) => ({
+    params: { category },
+  }));
+}
+
+type Params = InferGetStaticParamsType<typeof getStaticPaths>;
+
+const { category } = Astro.params as Params;
+
+const currLocale = getLocaleFromUrl(Astro.url);
+const posts = await getAllWork(currLocale);
+const filteredPosts = posts.filter((post) =>
+  post.data.categories.map((c) => slugify(c)).includes(category),
+);
+---
+
+<BaseLayout
+  title={`Case studies: ${humanize(category)}`}
+  description="Case studies filtered by category."
+>
+  <section class="site-container">
+    <div
+      class="overflow-x-clip bg-[url('/assets/pattern-light.svg')] bg-center bg-no-repeat pt-24 md:pt-32 dark:bg-[url('/assets/pattern-dark.svg')]"
+    >
+      <div class="mx-auto flex max-w-[950px] flex-col justify-center">
+        <div class="mx-auto">
+          <Badge>Work</Badge>
+        </div>
+        <h1 class="h1 text-center">
+          Case studies on <span class="decoration-primary-500 underline"
+            >{humanize(category).toLowerCase()}</span
+          >
+        </h1>
+      </div>
+
+      <div class="mt-20 flex pb-8 md:mt-28">
+        <WorkCategoryCloud />
+      </div>
+    </div>
+
+    <div class="grid gap-8 gap-y-10 md:grid-cols-2">
+      {filteredPosts.map((post) => <WorkPostCard post={post} showDescription={true} />)}
+    </div>
+  </section>
+</BaseLayout>
