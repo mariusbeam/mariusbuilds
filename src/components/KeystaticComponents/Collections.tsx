@@ -344,12 +344,16 @@ const Services = (locale: (typeof locales)[number]) =>
       homepageBlurb: fields.text({
         label: "Homepage summary",
         description:
-          "Longer copy for the “My main services” block on the homepage. Falls back to the short description if empty.",
+          "Card text for the “My main services” icon cards on the homepage. Falls back to the short description if empty.",
         multiline: true,
+      }),
+      homepageIcon: fields.text({
+        label: "Homepage icon",
+        description: 'Tabler icon id for the homepage card, e.g. "tabler/script" (must exist in src/icons/tabler/)',
       }),
       showOnHomepage: fields.checkbox({
         label: "Show on homepage",
-        description: "Include in the “My main services” section on the homepage.",
+        description: "Include in the “My main services” icon cards on the homepage.",
         defaultValue: false,
       }),
       homepageOrder: fields.integer({
@@ -414,6 +418,34 @@ const Beliefs = (locale: (typeof locales)[number]) =>
       icon: fields.text({
         label: "Icon",
         description: 'Tabler icon id, e.g. "tabler/bulb"',
+        validation: { isRequired: true },
+      }),
+      sortOrder: fields.integer({
+        label: "Sort order",
+        defaultValue: 0,
+      }),
+      draft: fields.checkbox({ label: "Draft" }),
+      mappingKey: fields.text({ label: "Mapping Key" }),
+    },
+  });
+
+/** Homepage FAQ items */
+const Faq = (locale: (typeof locales)[number]) =>
+  collection({
+    label: `Homepage — FAQ (${locale.toUpperCase()})`,
+    slugField: "question",
+    path: `src/data/faq/${locale}/*/`,
+    format: { data: "yaml" },
+    columns: ["question", "sortOrder"],
+    schema: {
+      question: fields.slug({
+        name: { label: "Question" },
+        slug: { label: "Slug" },
+      }),
+      answer: fields.text({
+        label: "Answer",
+        description: "Supports basic HTML (links, emphasis).",
+        multiline: true,
         validation: { isRequired: true },
       }),
       sortOrder: fields.integer({
@@ -523,6 +555,7 @@ export default {
   Tools,
   Beliefs,
   HowIWorkSteps,
+  Faq,
   Authors,
   Services,
   OtherPages,

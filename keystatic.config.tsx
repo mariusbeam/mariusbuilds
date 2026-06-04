@@ -48,6 +48,7 @@ export default config({
 
     beliefsEN: Collections.Beliefs("en"),
     howIWorkEN: Collections.HowIWorkSteps("en"),
+    faqEN: Collections.Faq("en"),
 
     authors: Collections.Authors(""),
 

@@ -11,12 +11,6 @@ export interface HomepageCard {
   text: string;
 }
 
-export interface HomepageCaseStudy {
-  title: string;
-  details: string;
-  href: string;
-}
-
 export const homepageData = {
   hero: {
     badge: "Hi, I'm Marius",
@@ -27,29 +21,34 @@ export const homepageData = {
     ctaHref: "/contact",
   },
   mainServices: {
+    badge: "Services",
     title: "My main services",
     description: "",
     items: [
       {
-        title: "Custom tools and web apps, built around how your business actually works.",
-        details:
-          "Configurators, dashboards, client portals, booking systems, internal tools. If the software you need doesn't exist, or every off-the-shelf option forces you to change how you work, I'll build the thing that fits.",
-        href: "/contact",
+        icon: "tabler/script",
+        title: "Custom tools and web apps",
+        text: "Configurators, dashboards, client portals, booking systems, internal tools. If the software you need doesn't exist, or every off-the-shelf option forces you to change how you work, I'll build the thing that fits.",
+        href: "/services/custom-tools/",
       },
       {
+        icon: "tabler/bulb",
         title: "AI consultancy and automation",
-        details:
-          "You want to use AI, but there are a hundred tools and no obvious place to begin. I help you cut through that. We look at your business, pick one process, and figure out what actually helps, whether that's an automation I build or a tool you already have. Clarity first, building second.",
-        href: "/contact",
+        text: "You want to use AI, but there are a hundred tools and no obvious place to begin. I help you cut through that. We look at your business, pick one process, and figure out what actually helps.",
+        href: "/services/ai-consultancy/",
       },
       {
+        icon: "tabler/home-heart",
         title: "Custom websites you actually own",
-        details:
-          "A fast, clean website that's genuinely yours. No monthly platform fee, no renting your own site, no hitting a wall when you want to change something. Built so it loads fast, you can edit your own content, and then it's yours to keep.",
-        href: "/contact",
+        text: "A fast, clean website that's genuinely yours. No monthly platform fee, no renting your own site. Built so it loads fast, you can edit your own content, and then it's yours to keep.",
+        href: "/services/custom-websites/",
       },
-    ] satisfies HomepageCaseStudy[],
+    ],
     buttonText: "Book a call",
+  },
+  faq: {
+    badge: "FAQ",
+    title: "Frequently Asked Questions",
   },
   beliefs: {
     title: "What I believe",

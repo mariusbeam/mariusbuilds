@@ -5,7 +5,8 @@ import BaseLayout from "@layouts/BaseLayout.astro";
 // components
 import HeroSideImage from "@components/Hero/HeroSideImage.astro";
 
-import ServicesCardGrid from "@components/Services/ServicesCardGrid.astro";
+import ServicesIcon from "@components/Services/ServicesIcon.astro";
+import FaqCards from "@components/Faq/FaqCards.astro";
 import FeatureCardsSmall from "@components/Feature/FeatureCardsSmall.astro";
 import FeatureCardsMedium from "@components/Feature/FeatureCardsMedium.astro";
 import HomepageBlogPreview from "@components/Feature/HomepageBlogPreview.astro";
@@ -29,11 +30,13 @@ const homepage = await getHomepagePageData(currLocale);
 
   <FeatureCardsMedium content={homepage.howIWork} />
 
-  <ServicesCardGrid content={homepage.mainServices} />
+  <ServicesIcon content={homepage.mainServices} />
 
   <HomepageBlogPreview content={homepage.blog} />
 
   <HomepageToolsTeaser content={homepage.tools} />
+
+  <FaqCards content={homepage.faq} />
 
   <CtaCardSplit content={homepage.bottomCta} />
 </BaseLayout>

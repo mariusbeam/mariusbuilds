@@ -130,11 +130,18 @@ const homepageCollection = defineCollection({
       description: z.string(),
     }),
     mainServices: z.object({
+      badge: z.string().optional(),
       title: z.string(),
       description: z.string().optional(),
       buttonText: z.string(),
       buttonHref: z.string().optional(),
     }),
+    faq: z
+      .object({
+        badge: z.string().optional(),
+        title: z.string(),
+      })
+      .optional(),
     blog: homepageTextBlockSchema,
     tools: homepageTextBlockSchema,
     bottomCta: homepageTextBlockSchema,
@@ -167,6 +174,18 @@ const howIWorkCollection = defineCollection({
   }),
 });
 
+// homepage FAQ items
+const faqCollection = defineCollection({
+  loader: glob({ pattern: "**/index.{yaml,yml}", base: "./src/data/faq" }),
+  schema: z.object({
+    question: z.string(),
+    answer: z.string(),
+    sortOrder: z.number().default(0),
+    mappingKey: z.string().optional(),
+    draft: z.boolean().optional(),
+  }),
+});
+
 // services
 const servicesCollection = defineCollection({
   loader: glob({ pattern: "**/[^_]*{md,mdx}", base: "./src/data/services" }),
@@ -176,6 +195,7 @@ const servicesCollection = defineCollection({
       description: z.string(),
       image: image(),
       homepageBlurb: z.string().optional(),
+      homepageIcon: z.string().optional(),
       showOnHomepage: z.boolean().optional(),
       homepageOrder: z.number().default(0),
       mappingKey: z.string().optional(),
@@ -204,6 +224,7 @@ export const collections = {
   about: aboutCollection,
   beliefs: beliefsCollection,
   howIWork: howIWorkCollection,
+  faq: faqCollection,
   authors: authorsCollection,
   services: servicesCollection,
   otherPages: otherPagesCollection,

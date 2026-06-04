@@ -79,18 +79,36 @@ const Homepage = (locale: (typeof locales)[number]) =>
       ),
       mainServices: fields.object(
         {
+          badge: fields.text({
+            label: "Badge (optional, above title)",
+            description: 'e.g. "Services"',
+          }),
           title: fields.text({ label: "Section title", validation: { isRequired: true } }),
           description: fields.text({
             label: "Section description (optional)",
             multiline: true,
           }),
           buttonText: fields.text({
-            label: "Bottom button text",
+            label: "Card button text",
+            description: 'Shown on each service card, e.g. "Book a call"',
             validation: { isRequired: true },
           }),
           buttonHref: linkField("Bottom button link", "/contact"),
         },
         { label: "My main services (section header)" },
+      ),
+      faq: fields.object(
+        {
+          badge: fields.text({
+            label: "Badge (optional, above title)",
+            description: 'e.g. "FAQ"',
+          }),
+          title: fields.text({
+            label: "Section title",
+            validation: { isRequired: true },
+          }),
+        },
+        { label: "FAQ (section header)" },
       ),
       blog: textBlock("Blog block"),
       tools: textBlock("Tools block"),

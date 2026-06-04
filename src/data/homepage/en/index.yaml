@@ -19,10 +19,14 @@ howIWork:
     keep 2 active prokects at the time. When those are gone, you go on a short
     waitlist, and I'll tell you when a slot opens up.
 mainServices:
+  badge: Services
   title: My main services
   description: ""
   buttonText: Book a call
   buttonHref: /contact
+faq:
+  badge: FAQ
+  title: Frequently Asked Questions
 blog:
   title: Latest from the blog
   description: >-

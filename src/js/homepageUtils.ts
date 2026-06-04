@@ -2,6 +2,8 @@ import { type CollectionEntry, getCollection } from "astro:content";
 
 import { filterCollectionByLanguage } from "@/js/localeUtils";
 import homepageFallback from "@/config/en/homepageData";
+import faqFallback from "@config/en/faqData.json";
+import { type FaqItem } from "@/config/types/configDataTypes";
 import { locales } from "@/config/siteSettings.json";
 
 export interface HomepageCardItem {
@@ -11,8 +13,9 @@ export interface HomepageCardItem {
 }
 
 export interface HomepageServiceItem {
+  icon: string;
   title: string;
-  details: string;
+  text: string;
   href: string;
 }
 
@@ -44,10 +47,16 @@ export interface HomepageContent {
     items: HomepageCardItem[];
   };
   mainServices: {
+    badge?: string;
     title: string;
     description: string;
     items: HomepageServiceItem[];
     buttonText: string;
+  };
+  faq: {
+    badge?: string;
+    title: string;
+    items: FaqItem[];
   };
   blog: HomepageTextBlock;
   tools: HomepageTextBlock;
@@ -98,9 +107,14 @@ function mergeHomepageCopy(data?: HomepageCopyEntry) {
       description: pick(data?.howIWork.description, fb.howIWork.description),
     },
     mainServices: {
+      badge: pick(data?.mainServices.badge, fb.mainServices.badge ?? ""),
       title: pick(data?.mainServices.title, fb.mainServices.title),
       description: pick(data?.mainServices.description, fb.mainServices.description ?? ""),
       buttonText: pick(data?.mainServices.buttonText, fb.mainServices.buttonText),
+    },
+    faq: {
+      badge: pick(data?.faq?.badge, fb.faq.badge ?? ""),
+      title: pick(data?.faq?.title, fb.faq.title),
     },
     blog: {
       title: pick(data?.blog.title, fb.blog.title),
@@ -136,11 +150,12 @@ export async function getHomepagePageData(
   lang: (typeof locales)[number],
 ): Promise<HomepageContent> {
   const fb = homepageFallback;
-  const [cmsCopy, beliefItems, howIWorkItems, homepageServices] = await Promise.all([
+  const [cmsCopy, beliefItems, howIWorkItems, homepageServices, faqItems] = await Promise.all([
     loadHomepageCopyEntry(lang),
     getBeliefCards(lang),
     getHowIWorkCards(lang),
     getHomepageServices(lang),
+    getFaqItems(lang),
   ]);
 
   const copy = mergeHomepageCopy(cmsCopy);
@@ -157,7 +172,13 @@ export async function getHomepagePageData(
     },
     mainServices: {
       ...copy.mainServices,
+      badge: copy.mainServices.badge || undefined,
       items: homepageServices.length > 0 ? homepageServices : [...fb.mainServices.items],
+    },
+    faq: {
+      ...copy.faq,
+      badge: copy.faq.badge || undefined,
+      items: faqItems.length > 0 ? faqItems : [...faqFallback],
     },
     blog: copy.blog,
     tools: copy.tools,
@@ -197,6 +218,7 @@ export async function getHowIWorkCards(
 export async function getHomepageServices(
   lang: (typeof locales)[number],
 ): Promise<HomepageServiceItem[]> {
+  const fb = homepageFallback;
   const entries = await getCollection(
     "services",
     ({ data }) => data.draft !== true && data.showOnHomepage === true,
@@ -211,10 +233,26 @@ export async function getHomepageServices(
     })
     .map((entry) => {
       const slug = stripLocaleFromId(entry.id);
+      const fallbackIcon =
+        fb.mainServices.items.find((item) => item.href === `/services/${slug}/`)?.icon ??
+        "tabler/script";
+
       return {
+        icon: entry.data.homepageIcon?.trim() || fallbackIcon,
         title: entry.data.title,
-        details: entry.data.homepageBlurb?.trim() || entry.data.description,
+        text: entry.data.homepageBlurb?.trim() || entry.data.description,
         href: `/services/${slug}/`,
       };
     });
+}
+
+/** Homepage FAQ items from Keystatic. */
+export async function getFaqItems(lang: (typeof locales)[number]): Promise<FaqItem[]> {
+  const entries = await getCollection("faq", ({ data }) => data.draft !== true);
+  const filtered = filterCollectionByLanguage(entries, lang) as CollectionEntry<"faq">[];
+
+  return sortByOrder(filtered).map((entry) => ({
+    question: entry.data.question,
+    answer: entry.data.answer,
+  }));
 }
