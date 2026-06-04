@@ -17,19 +17,6 @@ const allTools = await getAllTools("en");
 
 const activeTag = Astro.url.searchParams.get("tag");
 const tools = activeTag ? filterToolsByTag(allTools, activeTag) : allTools;
-
-const toolsByCategory = tools.reduce<Record<string, typeof tools>>((acc, tool) => {
-  const key = tool.data.category?.trim() || "Other";
-  if (!acc[key]) acc[key] = [];
-  acc[key].push(tool);
-  return acc;
-}, {});
-
-const categoryOrder = Object.keys(toolsByCategory).sort((a, b) => {
-  if (a === "Other") return 1;
-  if (b === "Other") return -1;
-  return a.localeCompare(b);
-});
 ---
 
 <BaseLayout
@@ -65,16 +52,9 @@ const categoryOrder = Object.keys(toolsByCategory).sort((a, b) => {
 
     {
       tools.length > 0 ? (
-        <div class="mt-12 space-y-14">
-          {categoryOrder.map((category) => (
-            <div>
-              <h2 class="h2 mb-6 text-center md:text-left">{humanize(category)}</h2>
-              <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                {toolsByCategory[category].map((tool) => (
-                  <ToolCard tool={tool} data-mos="fade-up" />
-                ))}
-              </div>
-            </div>
+        <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {tools.map((tool) => (
+            <ToolCard tool={tool} data-mos="fade-up" />
           ))}
         </div>
       ) : (

@@ -18,15 +18,18 @@ import Singletons from "@components/KeystaticComponents/Singletons";
 
 const isDev = import.meta.env.DEV === true;
 
+/** Set on Netlify after creating a project at https://keystatic.cloud (see CMS.md). */
+const keystaticCloudProject =
+  import.meta.env.KEYSTATIC_CLOUD_PROJECT ?? "mariusbeam/mariusbuilds";
+
 export default config({
-  // Local files in dev; Keystatic Cloud in production (set KEYSTATIC_CLOUD_PROJECT when deploying)
+  // Local files in dev; Keystatic Cloud in production
   storage: isDev ? { kind: "local" } : { kind: "cloud" },
   ...(isDev
     ? {}
     : {
         cloud: {
-          project:
-            import.meta.env.KEYSTATIC_CLOUD_PROJECT ?? "cosmic-themes/atlas",
+          project: keystaticCloudProject,
         },
       }),
   ui: {

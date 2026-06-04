@@ -1,0 +1,72 @@
+---
+/**
+ * Homepage services as a compact 3-column card grid.
+ */
+import Badge from "@components/Badge/Badge.astro";
+import Button from "@components/Button/Button.astro";
+
+import { getLocaleFromUrl } from "@js/localeUtils";
+import { getLocalizedRoute } from "@js/translationUtils";
+
+interface ServiceItem {
+  title: string;
+  details: string;
+  href: string;
+}
+
+interface SectionContent {
+  badge?: string;
+  title: string;
+  description?: string;
+  items: ServiceItem[];
+  buttonText?: string;
+}
+
+interface Props {
+  content: SectionContent;
+}
+
+const { content } = Astro.props as Props;
+const currLocale = getLocaleFromUrl(Astro.url);
+const buttonText = content.buttonText ?? "Learn more";
+---
+
+<section id="services-card-grid" class="overflow-hidden py-24 md:py-28">
+  <div class="site-container">
+    <div class="mx-auto mb-12 text-center md:mb-16 md:max-w-4xl" data-mos="fade-up">
+      {content.badge && <Badge>{content.badge}</Badge>}
+      <h2 class="h2 mb-4">{content.title}</h2>
+      {
+        content.description && (
+          <p class="description text-lg md:text-xl">{content.description}</p>
+        )
+      }
+    </div>
+
+    <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      {
+        content.items.map((item, idx) => (
+          <article
+            class="dark:hover:bg-base-900 flex h-full flex-col rounded-md border border-base-200 p-6 transition hover:bg-white hover:shadow-md dark:border-base-800"
+            data-mos="fade-up"
+            data-mos-delay={0.1 * idx}
+          >
+            <h3 class="text-base-900 dark:text-white text-lg font-bold text-pretty">{item.title}</h3>
+            <p class="description mt-3 flex-1 text-sm text-pretty md:text-base">{item.details}</p>
+            <div class="mt-5">
+              <Button
+                variant="primary"
+                href={getLocalizedRoute(currLocale, item.href)}
+                arrow="none"
+                class="!inline-flex !w-auto !px-4 !py-2 !text-sm"
+                aria-label={`${buttonText} — ${item.title}`}
+              >
+                {buttonText}
+              </Button>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>

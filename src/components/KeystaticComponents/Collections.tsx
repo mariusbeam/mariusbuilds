@@ -321,7 +321,7 @@ const Services = (locale: (typeof locales)[number]) =>
     label: `Services (${locale.toUpperCase()})`,
     slugField: "title",
     path: `src/data/services/${locale}/*/`,
-    columns: ["title"],
+    columns: ["title", "homepageOrder"],
     entryLayout: "content",
     format: { contentField: "content" },
     schema: {
@@ -353,8 +353,9 @@ const Services = (locale: (typeof locales)[number]) =>
         defaultValue: false,
       }),
       homepageOrder: fields.integer({
-        label: "Homepage order",
-        description: "Lower numbers appear first on the homepage.",
+        label: "Sort order",
+        description:
+          "Lower numbers appear first on the services page and in the homepage “My main services” grid.",
         defaultValue: 0,
       }),
       draft: fields.checkbox({

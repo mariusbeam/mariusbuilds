@@ -29,13 +29,13 @@ const isExternalCta = about.bottomCta.buttonHref.startsWith("http");
   <section
     class="site-container mt-20 overflow-x-clip bg-[url('/assets/pattern-light-big.svg')] bg-center bg-no-repeat py-16 md:py-24 dark:bg-[url('/assets/pattern-dark-big.svg')]"
   >
-    <div class="-mx-4 flex flex-wrap items-center gap-12 xl:gap-16">
-      <div class="w-full px-4 md:w-1/2">
+    <div class="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
+      <div>
         {about.hero.badge && <Badge>{about.hero.badge}</Badge>}
         <h1 class="h1 text-pretty">{about.hero.title}</h1>
         <p class="description mt-6 text-lg text-pretty md:text-xl">{about.hero.subhead}</p>
       </div>
-      <div class="w-full px-4 md:w-1/2">
+      <div>
         <div class="relative mx-auto max-w-[420px]">
           <div class="overflow-hidden rounded-2xl">
             <Image

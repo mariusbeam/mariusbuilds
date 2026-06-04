@@ -12,7 +12,7 @@ interface Props {
 }
 
 const { tool, class: className } = Astro.props as Props;
-const { name, url, tagline, category, tags = [] } = tool.data;
+const { name, url, tagline, tags = [] } = tool.data;
 const faviconUrl = getFaviconUrl(url);
 ---
 
@@ -58,13 +58,6 @@ const faviconUrl = getFaviconUrl(url);
           aria-hidden="true"
         />
       </div>
-      {
-        category && (
-          <p class="text-primary-500 mt-1 text-xs font-semibold tracking-wide uppercase">
-            {category}
-          </p>
-        )
-      }
     </div>
   </div>
   {

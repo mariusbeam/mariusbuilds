@@ -84,6 +84,66 @@ Keystatic writes to:
 
 If you change a collection schema, update both `keystatic.config.tsx` / `Collections.tsx` and `src/content.config.ts`.
 
-## Production
+## Production (Keystatic Cloud)
 
-Keystatic Cloud is configured in `keystatic.config.tsx` (`cloud.project`). Point that to your own Keystatic Cloud project before going live.
+The **website** on Netlify already works from GitHub — no Cloud account required.
+
+You need Keystatic Cloud only if you want to open **`https://your-site.netlify.app/keystatic`** and edit content in the browser (changes save back to GitHub).
+
+Pushing code to GitHub does **not** create a Cloud project. You add it once in the Keystatic dashboard, then wire the ID into Netlify.
+
+### 1. Create the project (one-time)
+
+1. Sign in at [keystatic.cloud](https://keystatic.cloud) with the same GitHub account that owns the repo (**mariusbeam**).
+2. **Create a team** (e.g. `mariusbeam`). The team name becomes the first part of your project ID.
+3. **Create a project** inside that team:
+   - Connect GitHub repository: **`mariusbeam/mariusbuilds`**
+   - If the repo does not appear, click to **configure GitHub app access** and allow Keystatic for that repo (or all repos).
+   - Name the project something clear (e.g. `mariusbuilds`). That name becomes the second part of the ID.
+4. Open the project → **Settings**. Copy the **project** string. It looks like:
+
+   ```text
+   mariusbeam/mariusbuilds
+   ```
+
+   (your team slug + `/` + your project slug — Keystatic shows the exact string to paste.)
+
+### 2. Tell the site which project to use
+
+**On Netlify** (recommended):
+
+1. Site → **Site configuration** → **Environment variables**
+2. Add variable:
+   - **Key:** `KEYSTATIC_CLOUD_PROJECT`
+   - **Value:** the string from step 1 (e.g. `mariusbeam/mariusbuilds`)
+3. **Deploys** → **Trigger deploy** → **Deploy site** (so the new variable is picked up).
+
+**Locally** (only if you want to test Cloud mode on your machine):
+
+```bash
+cp .env.example .env
+# Edit .env and set KEYSTATIC_CLOUD_PROJECT=mariusbeam/mariusbuilds
+```
+
+Then run `npm run build && npm run preview` — note: Netlify adapter preview is limited; Cloud editing is mainly tested on the deployed site.
+
+### 3. How it fits together
+
+| Where | Storage | CMS URL |
+|-------|---------|---------|
+| Your Mac (`npm run dev`) | Files in `src/data/` (local) | http://127.0.0.1:4321/keystatic |
+| Netlify (live site) | Keystatic Cloud → commits to GitHub | https://YOUR-SITE/keystatic |
+
+After you save in Cloud, Keystatic commits to GitHub → Netlify rebuilds → the public site updates.
+
+### 4. If the project still does not show in your account
+
+- You are signed into Keystatic with a **different GitHub user** than **mariusbeam**.
+- The GitHub app was not granted access to **mariusbuilds** (fix under GitHub → Settings → Applications → Keystatic).
+- You created a project on a **different team** — check the team switcher at the top of [keystatic.cloud](https://keystatic.cloud).
+
+### 5. Config in this repo
+
+`keystatic.config.tsx` reads `KEYSTATIC_CLOUD_PROJECT` in production. Until you set it on Netlify, it falls back to the theme demo (`cosmic-themes/atlas`) — that is **not** your site. Always set your own project ID before relying on live `/keystatic`.
+
+See also `.env.example`.

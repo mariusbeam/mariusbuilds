@@ -1,6 +1,8 @@
 ---
 import Button from "@components/Button/Button.astro";
+import ToolCard from "@components/ToolCard/ToolCard.astro";
 
+import { getAllTools } from "@js/toolsUtils";
 import { getLocaleFromUrl } from "@js/localeUtils";
 import { getLocalizedRoute } from "@js/translationUtils";
 
@@ -13,22 +15,42 @@ interface TextBlock {
 
 interface Props {
   content: TextBlock;
+  limit?: number;
 }
 
-const { content } = Astro.props as Props;
+const { content, limit = 6 } = Astro.props as Props;
 const currLocale = getLocaleFromUrl(Astro.url);
+const tools = (await getAllTools(currLocale)).slice(0, limit);
+const toolsHref = getLocalizedRoute(currLocale, content.href);
 ---
 
-<section id="homepage-tools-teaser" class="site-container py-24 md:py-28">
-  <div class="mx-auto max-w-4xl text-center" data-mos="fade-up">
-    <h2 class="h2 mb-4">{content.title}</h2>
-    <p class="description text-lg text-pretty md:text-xl">{content.description}</p>
-    <div class="mt-6 flex justify-center">
-      <Button
-        variant="primary"
-        href={getLocalizedRoute(currLocale, content.href)}
-        class="!inline-flex !w-auto"
-      >
+<section id="homepage-tools-teaser" class="py-24 md:py-28">
+  <div class="site-container">
+    <div class="mx-auto max-w-4xl text-center" data-mos="fade-up">
+      <h2 class="h2 mb-4">{content.title}</h2>
+      <p class="description text-lg text-pretty md:text-xl">{content.description}</p>
+    </div>
+
+    {
+      tools.length > 0 ? (
+        <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {tools.map((tool, idx) => (
+            <ToolCard
+              tool={tool}
+              data-mos="fade-up"
+              data-mos-delay={0.08 * idx}
+            />
+          ))}
+        </div>
+      ) : (
+        <p class="description mt-12 text-center text-lg">
+          No tools listed yet. Add entries in the CMS under Favourite tools (EN).
+        </p>
+      )
+    }
+
+    <div class="mt-12 flex justify-center" data-mos="fade-up">
+      <Button variant="primary" href={toolsHref} class="!inline-flex !w-auto">
         {content.cta}
       </Button>
     </div>

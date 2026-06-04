@@ -137,7 +137,9 @@
 	}
 
 	.site-container {
-		@apply mx-auto max-w-[90rem] px-4;
+		/* ~30px min gutter, scales with viewport, ~49px max (30 × φ) */
+		@apply mx-auto max-w-[90rem];
+		padding-inline: clamp(1.875rem, 1.25rem + 2vw, 3.048rem);
 	}
 
 	/* used for newsletter, and contact form inputs */
