@@ -9,7 +9,7 @@ import { getLocaleFromUrl } from "@js/localeUtils";
 import { getTranslatedData, getLocalizedRoute } from "@js/translationUtils";
 import { getAboutPageData } from "@js/aboutUtils";
 
-import heroImage from "@images/marius-2.webp";
+import heroImage from "@images/marius-statue.webp";
 
 const currLocale = getLocaleFromUrl(Astro.url);
 const siteData = getTranslatedData("siteData", currLocale);
@@ -44,6 +44,7 @@ const isExternalCta = about.bottomCta.buttonHref.startsWith("http");
               alt="Marius"
               loading="eager"
               width={420}
+              height={315}
               densities={[1.5, 2]}
             />
           </div>
