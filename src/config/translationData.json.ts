@@ -46,9 +46,9 @@ export const textTranslations = {
   en: {
     // Hero on `/` comes from Keystatic → Homepage (EN). These strings are for theme demo pages only.
     hero_badge: "Hi, I'm Marius",
-    hero_text: "I build custom tools for small businesses.",
+    hero_text: "AI Automation Consultant and Web Developer for Small Businesses",
     hero_description:
-      "Tools, web apps, and AI things for small businesses that need something specific.",
+      "I help business owners find the right tool for the job, and when it doesn't exist yet, I build it. We start with how you actually work, then pick what fits: an existing tool, an automation, or something custom.",
     hero_visitor_line: "",
     hero_cta: "Let's talk",
     back_to_all_posts: "Back to all posts",

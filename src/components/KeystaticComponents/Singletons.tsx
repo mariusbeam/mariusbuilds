@@ -28,7 +28,7 @@ const textBlock = (label: string) =>
     { label },
   );
 
-/** All homepage section titles, hero, buttons, and bottom CTA (EN). Card content stays in Beliefs / How I work / Services collections. */
+/** All homepage section titles, hero, buttons, and bottom CTA (EN). Card content stays in How I work / Services collections. */
 const Homepage = (locale: (typeof locales)[number]) =>
   singleton({
     label: `Homepage (${locale.toUpperCase()})`,
@@ -54,17 +54,6 @@ const Homepage = (locale: (typeof locales)[number]) =>
           ctaHref: linkField("Primary button link", "/contact"),
         },
         { label: "Hero" },
-      ),
-      beliefs: fields.object(
-        {
-          title: fields.text({ label: "Section title", validation: { isRequired: true } }),
-          description: fields.text({
-            label: "Section description",
-            multiline: true,
-            validation: { isRequired: true },
-          }),
-        },
-        { label: "What I believe (section header)" },
       ),
       howIWork: fields.object(
         {
@@ -111,8 +100,7 @@ const Homepage = (locale: (typeof locales)[number]) =>
         { label: "FAQ (section header)" },
       ),
       blog: textBlock("Blog block"),
-      tools: textBlock("Tools block"),
-      bottomCta: textBlock("Bottom CTA"),
+      bottomCta: textBlock("Bottom CTA (favourite tools)"),
     },
   });
 

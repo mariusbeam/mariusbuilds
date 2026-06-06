@@ -121,10 +121,6 @@ const homepageCollection = defineCollection({
       cta: z.string(),
       ctaHref: z.string(),
     }),
-    beliefs: z.object({
-      title: z.string(),
-      description: z.string(),
-    }),
     howIWork: z.object({
       title: z.string(),
       description: z.string(),
@@ -143,7 +139,6 @@ const homepageCollection = defineCollection({
       })
       .optional(),
     blog: homepageTextBlockSchema,
-    tools: homepageTextBlockSchema,
     bottomCta: homepageTextBlockSchema,
   }),
 });

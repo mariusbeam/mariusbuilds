@@ -1,0 +1,9 @@
+name: Resend
+url: https://resend.com/
+tagline: Super easy email API to use for your projects, you set it up in 2 minutes max
+category: Email
+tags:
+  - Email
+  - API
+sortOrder: 0
+draft: false

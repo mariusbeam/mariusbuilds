@@ -1,0 +1,9 @@
+name: Opencode
+url: https://opencode.ai/go
+tagline: I use it for having lower API cost on my Hermes Agent
+category: AI
+tags:
+  - AI
+  - API
+sortOrder: 6
+draft: false

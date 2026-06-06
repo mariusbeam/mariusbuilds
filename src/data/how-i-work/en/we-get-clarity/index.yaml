@@ -1,5 +1,8 @@
 title: "2. We get clarity: build or buy"
-text: I look at it critically. Is a custom tool actually worth it here, or is there an existing tool that does the job better and cheaper? Either way you walk away with a clear spec you can use, and you decide whether to build it with me or take it elsewhere.
+text: >-
+  I look at it straight. Is a custom tool actually worth it here, or does an
+  existing one do the job better and cheaper? Either way you walk out with a
+  clear spec, and you decide: build it with me, or take it elsewhere.
 icon: tabler/list-check
 sortOrder: 2
 draft: false

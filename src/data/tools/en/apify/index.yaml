@@ -1,0 +1,9 @@
+name: Apify
+url: https://apify.com/
+tagline: Give superpowers to Claude Cowork by connecting it to everything else
+category: AI
+tags:
+  - Scraping
+  - API
+sortOrder: 4
+draft: false

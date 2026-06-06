@@ -1,5 +1,7 @@
 title: 3. I build it, you use it
-text: If building makes sense, I build it, hand it over, and show you how it works. If you want, I'll keep maintaining it afterwards too.
+text: >-
+  If building makes sense, I build it, hand it over, and show you how it works.
+  Want it maintained after? I can do that too.
 icon: tabler/circle-arrow-up
 sortOrder: 3
 draft: false

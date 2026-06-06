@@ -153,6 +153,11 @@
 	.nav__link--base {
 		@apply text-white hover:text-white/85 leading-tight font-medium transition;
 	}
+
+	/* orange surfaces: dark foreground for text and icons */
+	.surface-primary {
+		@apply bg-primary-500 text-primary-foreground;
+	}
 }
 
 @layer utilities {

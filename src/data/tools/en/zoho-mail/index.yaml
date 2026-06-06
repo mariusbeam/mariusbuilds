@@ -1,0 +1,10 @@
+name: zoho mail
+url: https://www.zoho.com/mail/
+tagline: >-
+  If you don't want another subscription also for your email on your domain, you
+  can use Zoho
+category: Email Service
+tags:
+  - Email
+sortOrder: 7
+draft: false

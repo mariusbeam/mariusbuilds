@@ -1,9 +1,8 @@
 name: Cursor
 url: https://cursor.com
-tagline: AI-native code editor I use daily for client projects.
+tagline: Since composer 2.5 was released, this is my favorite IDE
 category: AI
 tags:
   - ai
-  - indie
-sortOrder: 1
+sortOrder: 2
 draft: false

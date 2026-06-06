@@ -36,11 +36,6 @@ export interface HomepageTextBlock {
 
 export interface HomepageContent {
   hero: HomepageHeroContent;
-  beliefs: {
-    title: string;
-    description: string;
-    items: HomepageCardItem[];
-  };
   howIWork: {
     title: string;
     description: string;
@@ -59,7 +54,6 @@ export interface HomepageContent {
     items: FaqItem[];
   };
   blog: HomepageTextBlock;
-  tools: HomepageTextBlock;
   bottomCta: HomepageTextBlock;
 }
 
@@ -98,10 +92,6 @@ function mergeHomepageCopy(data?: HomepageCopyEntry) {
       cta: pick(data?.hero.cta, fb.hero.cta),
       ctaHref: pick(data?.hero.ctaHref, fb.hero.ctaHref),
     },
-    beliefs: {
-      title: pick(data?.beliefs.title, fb.beliefs.title),
-      description: pick(data?.beliefs.description, fb.beliefs.description),
-    },
     howIWork: {
       title: pick(data?.howIWork.title, fb.howIWork.title),
       description: pick(data?.howIWork.description, fb.howIWork.description),
@@ -121,12 +111,6 @@ function mergeHomepageCopy(data?: HomepageCopyEntry) {
       description: pick(data?.blog.description, fb.blog.description),
       cta: pick(data?.blog.cta, fb.blog.cta),
       href: pick(data?.blog.href, fb.blog.href),
-    },
-    tools: {
-      title: pick(data?.tools.title, fb.tools.title),
-      description: pick(data?.tools.description, fb.tools.description),
-      cta: pick(data?.tools.cta, fb.tools.cta),
-      href: pick(data?.tools.href, fb.tools.href),
     },
     bottomCta: {
       title: pick(data?.bottomCta.title, fb.bottomCta.title),
@@ -150,9 +134,8 @@ export async function getHomepagePageData(
   lang: (typeof locales)[number],
 ): Promise<HomepageContent> {
   const fb = homepageFallback;
-  const [cmsCopy, beliefItems, howIWorkItems, homepageServices, faqItems] = await Promise.all([
+  const [cmsCopy, howIWorkItems, homepageServices, faqItems] = await Promise.all([
     loadHomepageCopyEntry(lang),
-    getBeliefCards(lang),
     getHowIWorkCards(lang),
     getHomepageServices(lang),
     getFaqItems(lang),
@@ -162,10 +145,6 @@ export async function getHomepagePageData(
 
   return {
     hero: copy.hero,
-    beliefs: {
-      ...copy.beliefs,
-      items: beliefItems.length > 0 ? beliefItems : [...fb.beliefs.items],
-    },
     howIWork: {
       ...copy.howIWork,
       items: howIWorkItems.length > 0 ? howIWorkItems : [...fb.howIWork.items],
@@ -181,23 +160,8 @@ export async function getHomepagePageData(
       items: faqItems.length > 0 ? faqItems : [...faqFallback],
     },
     blog: copy.blog,
-    tools: copy.tools,
     bottomCta: copy.bottomCta,
   };
-}
-
-/** “What I believe” cards from Keystatic. */
-export async function getBeliefCards(
-  lang: (typeof locales)[number],
-): Promise<HomepageCardItem[]> {
-  const entries = await getCollection("beliefs", ({ data }) => data.draft !== true);
-  const filtered = filterCollectionByLanguage(entries, lang) as CollectionEntry<"beliefs">[];
-
-  return sortByOrder(filtered).map((entry) => ({
-    icon: entry.data.icon,
-    title: entry.data.title,
-    text: entry.data.text,
-  }));
 }
 
 /** “How I work” step cards from Keystatic. */

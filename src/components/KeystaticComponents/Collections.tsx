@@ -318,7 +318,7 @@ const Tools = (locale: (typeof locales)[number]) =>
  */
 const Services = (locale: (typeof locales)[number]) =>
   collection({
-    label: `Services (${locale.toUpperCase()})`,
+    label: `How can I help you? (${locale.toUpperCase()})`,
     slugField: "title",
     path: `src/data/services/${locale}/*/`,
     columns: ["title", "homepageOrder"],
@@ -344,7 +344,7 @@ const Services = (locale: (typeof locales)[number]) =>
       homepageBlurb: fields.text({
         label: "Homepage summary",
         description:
-          "Card text for the “My main services” icon cards on the homepage. Falls back to the short description if empty.",
+          "Card text for the “How can I help you?” icon cards on the homepage. Falls back to the short description if empty.",
         multiline: true,
       }),
       homepageIcon: fields.text({
@@ -353,13 +353,13 @@ const Services = (locale: (typeof locales)[number]) =>
       }),
       showOnHomepage: fields.checkbox({
         label: "Show on homepage",
-        description: "Include in the “My main services” icon cards on the homepage.",
+        description: "Include in the “How can I help you?” icon cards on the homepage.",
         defaultValue: false,
       }),
       homepageOrder: fields.integer({
         label: "Sort order",
         description:
-          "Lower numbers appear first on the services page and in the homepage “My main services” grid.",
+          "Lower numbers appear first on the services page and in the homepage “How can I help you?” grid.",
         defaultValue: 0,
       }),
       draft: fields.checkbox({

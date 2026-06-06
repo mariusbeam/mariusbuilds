@@ -1,0 +1,9 @@
+name: Hetzner
+url: https://www.hetzner.com/
+tagline: VPS in Europe at the best price
+category: VPS
+tags:
+  - VPS
+  - Hosting
+sortOrder: 10
+draft: false

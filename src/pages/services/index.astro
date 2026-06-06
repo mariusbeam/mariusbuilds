@@ -2,8 +2,6 @@
 import { Image } from "astro:assets";
 
 import BaseLayout from "@layouts/BaseLayout.astro";
-import Badge from "@components/Badge/Badge.astro";
-
 import { getAllServices } from "@js/servicesUtils";
 import { getTranslatedData } from "@js/translationUtils";
 
@@ -11,11 +9,10 @@ const siteData = getTranslatedData("siteData", "en");
 const services = await getAllServices();
 ---
 
-<BaseLayout title={`Services | ${siteData.name}`} description="Custom tools, AI consultancy, and websites.">
+<BaseLayout title={`How can I help you? | ${siteData.name}`} description="Custom tools, AI consultancy, and websites.">
   <section class="site-container py-24 md:py-32">
     <div class="mx-auto max-w-3xl text-center">
-      <Badge>Services</Badge>
-      <h1 class="h1 mt-4 mb-6">My main services</h1>
+      <h1 class="h1 mt-4 mb-6">How can I help you?</h1>
       <p class="description text-lg text-pretty md:text-xl">
         What I help small businesses with — each with its own page if you want the full picture.
       </p>

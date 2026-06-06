@@ -1,5 +1,8 @@
 title: 1. We talk
-text: "Tell me your project and your goal: what you want to do, why you're doing it, and how your current setup works today. This part matters most, so we go deep. I'm good at this, asking the right questions and turning a fuzzy idea into something concrete."
+text: >-
+  Tell me what you're trying to do, why, and how you handle it today. This is
+  the part that matters most, so we go deep. My job is asking the right
+  questions and turning a fuzzy idea into a concrete plan.
 icon: tabler/mail
 sortOrder: 1
 draft: false

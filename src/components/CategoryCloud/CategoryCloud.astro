@@ -23,7 +23,7 @@ const { showCount = false } = Astro.props as Props;
     processedCategories.map(([category, count]) => (
       <a
         href={getLocalizedRoute(currLocale, `categories/${slugify(category)}/`)}
-        class="button text-base-400 hover:bg-primary-100 hover:text-primary-600 focus-visible:ring-primary-500 focus-visible:ring-opacity-50 dark:hover:bg-primary-500 px-4 py-1 font-semibold focus-visible:ring-2 dark:hover:text-white"
+        class="button text-base-400 hover:bg-primary-100 hover:text-primary-600 focus-visible:ring-primary-500 focus-visible:ring-opacity-50 dark:hover:bg-primary-500 dark:hover:text-primary-foreground px-4 py-1 font-semibold focus-visible:ring-2"
       >
         {humanize(category)}
         {showCount && <span class="text-xs opacity-70">{count}</span>}
