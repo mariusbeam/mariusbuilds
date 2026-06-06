@@ -1,15 +1,15 @@
 <svg viewBox="0 0 280 140" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <rect x="28" y="22" width="80" height="56" rx="8" stroke="rgba(255,255,255,0.15)" stroke-width="1" stroke-dasharray="4 3" fill="none"/>
+  <rect x="28" y="22" width="80" height="56" rx="8" stroke="rgba(255,255,255,0.40)" stroke-width="1" stroke-dasharray="4 3" fill="none"/>
   <rect x="42" y="36" width="22" height="8" rx="3" stroke="rgba(255,255,255,0.1)" stroke-width="0.8" stroke-dasharray="3 3" fill="none"/>
-  <rect x="42" y="50" width="32" height="6" rx="2" stroke="rgba(255,255,255,0.08)" stroke-width="0.8" stroke-dasharray="3 3" fill="none"/>
+  <rect x="42" y="50" width="32" height="6" rx="2" stroke="rgba(255,255,255,0.25)" stroke-width="0.8" stroke-dasharray="3 3" fill="none"/>
   <rect x="42" y="60" width="52" height="10" rx="3" stroke="#fdbb3e" stroke-width="0.8" stroke-dasharray="3 3" fill="none" stroke-opacity="0.3"/>
-  <text x="68" y="94" fill="rgba(255,255,255,0.15)" font-size="7" font-family="Nunito,sans-serif" font-weight="700" text-anchor="middle">PLAN</text>
+  <text x="68" y="94" fill="rgba(255,255,255,0.40)" font-size="7" font-family="Nunito,sans-serif" font-weight="700" text-anchor="middle">PLAN</text>
   <line x1="118" y1="50" x2="148" y2="50" stroke="#fdbb3e" stroke-width="1.5" stroke-opacity="0.5"/>
   <polygon points="146,46 154,50 146,54" fill="#fdbb3e" fill-opacity="0.5"/>
   <rect x="166" y="18" width="86" height="60" rx="8" stroke="#fdbb3e" stroke-width="1.5" fill="none"/>
   <rect x="180" y="32" width="24" height="8" rx="3" fill="#fdbb3e" fill-opacity="0.2"/>
   <rect x="180" y="46" width="58" height="6" rx="2" fill="rgba(255,255,255,0.1)"/>
-  <rect x="180" y="56" width="48" height="6" rx="2" fill="rgba(255,255,255,0.06)"/>
+  <rect x="180" y="56" width="48" height="6" rx="2" fill="rgba(255,255,255,0.20)"/>
   <circle cx="230" cy="48" r="12" stroke="#fdbb3e" stroke-width="1" stroke-opacity="0.25" fill="none"/>
   <path d="M226 48 L229 51 L234 45" stroke="#fdbb3e" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
   <text x="209" y="98" fill="#fdbb3e" font-size="7" font-family="Nunito,sans-serif" font-weight="700" text-anchor="middle" fill-opacity="0.5">BUILT</text>
