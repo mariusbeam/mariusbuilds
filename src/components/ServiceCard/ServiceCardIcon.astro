@@ -6,8 +6,6 @@
  * When `illustration` is provided, renders a custom SVG instead of the Tabler icon.
  */
 
-import { Icon } from "astro-icon/components";
-
 // components
 import Button from "@components/Button/Button.astro";
 
@@ -37,15 +35,6 @@ const currLocale = getLocaleFromUrl(Astro.url);
     href={getLocalizedRoute(currLocale, href)}
     class="group flex h-full flex-col items-start gap-5 rounded-2xl border border-white/[0.06] bg-base-900 p-8 transition-colors duration-200 hover:border-white/[0.12]"
   >
-    {/* Card number or icon */}
-    {cardNumber ? (
-      <span class="text-xs font-extrabold uppercase tracking-[0.1em] text-[#fdbb3e]">{cardNumber}</span>
-    ) : illustration ? null : (
-      <div class="surface-primary inline-flex size-12 items-center justify-center rounded-lg">
-        <Icon name={icon} class="size-6" aria-hidden="true" />
-      </div>
-    )}
-
     {/* Illustration */}
     {illustration && (
       <div class="flex w-full items-center justify-center">
@@ -55,7 +44,7 @@ const currLocale = getLocaleFromUrl(Astro.url);
 
     {/* Title + text */}
     <div class="flex flex-1 flex-col gap-2">
-      <h3 class="text-lg font-bold text-white leading-snug">{title}</h3>
+      <h3 class="text-lg font-bold text-[#fdbb3e] leading-snug">{title}</h3>
       <p class="text-sm text-[#8b8b8b] leading-relaxed">{text}</p>
     </div>
 

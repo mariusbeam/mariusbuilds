@@ -3,11 +3,8 @@
  * Dark card with illustration, number badge, title, and text.
  * Matches the card style proof design.
  *
- * When `illustration` is provided, renders a custom SVG instead of the Tabler icon.
- * `cardNumber` adds a numbered badge (01, 02, etc.) in the accent color.
+ * When `illustration` is provided, renders a custom SVG.
  */
-
-import { Icon } from "astro-icon/components";
 
 interface Props {
   icon: string;
@@ -17,23 +14,15 @@ interface Props {
   text: string;
   rest?: any;
 }
+---
 
-const { icon, illustration, cardNumber, title, text, ...rest } = Astro.props as Props;
+const { illustration, title, text, ...rest } = Astro.props as Props;
 ---
 
 <div
   class="group flex flex-col items-start gap-5 rounded-2xl border border-white/[0.06] bg-base-900 p-8 transition-colors duration-200 hover:border-white/[0.12]"
   {...rest}
 >
-  {/* Card number or icon */}
-  {cardNumber ? (
-    <span class="text-xs font-extrabold uppercase tracking-[0.1em] text-[#fdbb3e]">{cardNumber}</span>
-  ) : illustration ? null : (
-    <div class="surface-primary inline-flex size-12 items-center justify-center rounded-lg">
-      <Icon name={icon} class="size-6" aria-hidden="true" />
-    </div>
-  )}
-
   {/* Illustration */}
   {illustration && (
     <div class="flex w-full items-center justify-center">
@@ -43,7 +32,7 @@ const { icon, illustration, cardNumber, title, text, ...rest } = Astro.props as 
 
   {/* Title + text */}
   <div class="flex flex-col gap-2">
-    <h3 class="text-lg font-bold text-white leading-snug">{title}</h3>
+    <h3 class="text-lg font-bold text-[#fdbb3e] leading-snug">{title}</h3>
     <p class="text-sm text-[#8b8b8b] leading-relaxed">{text}</p>
   </div>
 </div>
