@@ -1,0 +1,120 @@
+---
+title: Stop Renting Your Website
+description: Most small businesses pay monthly for a website they don't own. Here's how static sites and Git-based tools flip that model.
+draft: false
+authors:
+  - marius-rusulet
+pubDate: 2026-06-06
+heroImage: ./heroImage.jpg
+categories:
+  - web-development
+  - business
+---
+
+A client asked me recently: "what do you mean I don't own my website? I pay for it every month."
+
+She had a point. She was paying Squarespace $23 a month. From her perspective, that meant ownership.
+
+Here's what actually happens when you "pay for" a website on a platform:
+
+- Your content lives in their database
+- Your design is tied to their template system
+- Your URL can be moved, but the site itself? Not easily
+- If you stop paying, everything disappears
+
+You're not buying a website. You're renting one.
+
+## The real cost of renting
+
+Let's do the math on a typical small business setup:
+
+**WordPress on managed hosting:** $25-30/month. Plus $50-100/year for premium plugins. Plus $15/year for the domain. Over 5 years: roughly $1,800-2,200.
+
+**Squarespace or Wix:** $23-35/month. Domain included for the first year, then $15-20/year. Over 5 years: roughly $1,500-2,200.
+
+**Webflow:** $18-39/month for a basic site. Gets expensive fast if you need a CMS.
+
+These aren't outrageous numbers. But here's what bothers me:
+
+You pay every month, forever, and you still don't own anything. Try exporting a Squarespace site and moving it somewhere else. It's possible, but it's not clean. Images break. Formatting gets weird. The blog content comes out but the structure doesn't.
+
+That's by design. Platforms make leaving hard because churn is expensive for them.
+
+## What owning your site actually looks like
+
+A website you own has three properties:
+
+**1. The content is in a portable format.** Not in a database only accessible through an admin panel. Plain files. Markdown text, YAML data, images in standard formats. You can open them with any text editor.
+
+**2. The site runs without a platform.** If your hosting provider shuts down, you can deploy the exact same site to a different host in minutes. Nothing is tied to a proprietary runtime.
+
+**3. You control the domain.** Not "free domain for the first year." Not "domain through us." Your domain, registered with a registrar you chose, pointing to wherever you want.
+
+This is what static sites give you. HTML, CSS, and images served from a CDN. No database to maintain. No PHP to update. No plugin vulnerabilities to patch.
+
+## The stack that makes this practical
+
+Until recently, static sites meant hand-coding HTML or using clunky desktop tools. That's changed.
+
+**Astro** builds your site from content files. You write pages in Markdown, define layouts, and Astro generates clean HTML. No JavaScript unless you specifically add it.
+
+**Keystatic** gives you an admin panel for editing content. It looks like a CMS (fields, image uploads, drafts) but saves everything as Markdown files in Git. When you hit publish, it commits.
+
+**Netlify** takes those files, builds the site, and puts it on a global CDN. Push to Git, site updates. No server management, no config files.
+
+The workflow for a business owner:
+- Open the admin panel at yoursite.com/admin
+- Edit a page, add a blog post, change your hours
+- Hit save
+- Site updates automatically
+
+Behind the scenes: files committed to Git, Netlify rebuilds, CDN refreshes. The editor doesn't need to know any of this.
+
+## What you pay (and what you don't)
+
+Here's the actual cost:
+
+| Thing | Cost |
+|-------|------|
+| Domain | $12/year |
+| Netlify hosting | $0 (free tier: 100GB bandwidth) |
+| GitHub | $0 (free for public/private repos) |
+| Keystatic CMS | $0 (up to 3 editors) |
+
+**Total: $12/year.** For a site that you actually own.
+
+Compare that to $276-420/year on a platform. The difference over five years is over $1,300. That's real money for a small business.
+
+"If it's free, what's the catch?" There isn't one for small sites. Netlify's free tier is generous because they make money on enterprise customers. GitHub is free because Microsoft wants developers in their ecosystem. Keystatic is open source.
+
+The tradeoff is that someone (maybe you, maybe a developer) needs to set it up initially. After that, editing content is as easy as any CMS.
+
+## When this doesn't make sense
+
+I'm not going to tell you this is right for everyone. It's not.
+
+If you need e-commerce with inventory management, cart, and payments, use Shopify. Static sites can't replace that (though they can serve as the marketing front).
+
+If you have a team of 10 editors with approval workflows and scheduled publishing, you need a proper headless CMS like Sanity or a traditional platform.
+
+If you want to set up the site yourself with zero technical help and never touch code, Squarespace is still the smoothest option.
+
+But if you're a small business with a website that's mostly pages, a blog, and a contact form? A static site gives you speed, ownership, and a dramatically lower lifetime cost.
+
+## What I build for clients
+
+When I build a website for a small business, the default is this stack. Here's what they get:
+
+- A GitHub account with their content as Markdown files
+- A Netlify account connected to that repo
+- The Keystatic admin panel for editing
+- Their domain pointing to Netlify
+- Instructions for adding new content
+
+After handover, they own every piece. Their content is on their GitHub. Their site is on their Netlify. Their domain is theirs.
+
+If they want to move, the content comes with them. If they want to add a developer later, the repo is standard Astro. Nothing proprietary, nothing locked in.
+
+I had a client ask: "what if you get hit by a bus?" Good question. The answer: another developer can pick up the repo and continue. The stack is well-documented and widely used. No vendor-specific knowledge required.
+
+That's what ownership looks like. Not "I pay every month" but "I could walk away tomorrow and take everything with me."

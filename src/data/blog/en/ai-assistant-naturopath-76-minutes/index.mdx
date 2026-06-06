@@ -1,0 +1,124 @@
+---
+title: I Built an AI Assistant for a Naturopath in 76 Minutes
+description: >-
+  A real consulting session from start to finish. Hermes setup, personality design, product catalog integration, and voice messaging on a cheap VPS.
+draft: false
+authors:
+  - marius-rusulet
+pubDate: 2026-06-06
+heroImage: ./heroImage.jpg
+categories:
+  - ai-automation
+  - case-studies
+---
+
+Last month I got on a call with Michele, a naturopath in Italy who runs a small shop. He wanted an AI assistant for his business. Not a chatbot for customers. An assistant for him: something that could answer questions about his products, draft responses to clients, and understand his field.
+
+76 minutes later he had a working system on his own server. Here's exactly what we did and why.
+
+## The starting point
+
+Michele runs a shop selling natural remedies and supplements. He has about 200 products, each with descriptions, ingredients, and usage instructions. He also has a CRM with client records.
+
+His problems were familiar:
+
+- Clients ask detailed questions about products ("can I take this with that medication?")
+- Answering takes time he doesn't have
+- The product catalog changes weekly
+- He wanted an assistant that understood naturopathy, not a generic chatbot
+
+He needed something that could:
+1. Search his product catalog and answer questions about specific items
+2. Reference his knowledge base of naturopathy material
+3. Understand Italian (his clients speak Italian)
+4. Run on his own infrastructure (privacy matters in healthcare-adjacent fields)
+
+## The plan: 8 steps in 76 minutes
+
+I structured the session as a guided build. My rule for consulting: the client types the commands. They learn faster and leave with ownership. If I type everything, they're lost the moment the call ends.
+
+Here's the sequence we ran:
+
+### 1. Server provisioning (8 minutes)
+
+Hetzner Cloud, CX22 instance. €4/month, 4GB RAM, Ubuntu.
+
+We hit a snag: the cost-optimized instances were sold out across three datacenters. Instead of panicking, we checked alternatives, agreed the €4 plan was fine, and moved on. Five minutes of calm problem-solving that saved thirty minutes of frustration.
+
+### 2. Hermes installation (5 minutes)
+
+One curl command. The installer handled Python, Node.js, and all dependencies.
+
+Michele had never used a terminal before. By the end of the session he said "I don't run from the terminal anymore, in fact I like it more now." That's what happens when someone types the commands themselves instead of watching you do it.
+
+### 3. API key and model setup (5 minutes)
+
+We set up an Anthropic key for Sonnet as the primary model and added DeepSeek as a cheaper fallback. The strategy: Sonnet for complex questions about products and health, DeepSeek for scheduling and file operations.
+
+### 4. Telegram bot (5 minutes)
+
+BotFather, token paste, done. Now Michele could talk to his assistant from his phone. We added his Telegram ID to the allowlist immediately. No random strangers talking to his agent.
+
+### 5. The SOUL file: giving it a personality (15 minutes)
+
+This was the longest step and the most important one.
+
+A SOUL file tells the agent who it is and how to behave. Without it, you get a generic helpful-assistant tone. With it, you get something that feels like a team member.
+
+For Michele, we defined:
+
+**Identity:** "You are an assistant to Michele, a professional naturopath and fitoterapista. You help with product information, client questions, and shop operations. You are precise, grounded in Michele's materials, and you never improvise medical claims."
+
+**Behavioral guardrails:** This was critical. A health-adjacent assistant needs boundaries. We added:
+
+- Never give medical diagnoses
+- Never recommend discontinuing prescribed medications
+- Always cite the specific product when answering product questions
+- If the question goes beyond the knowledge base, escalate to Michele
+- Respond in Italian by default
+
+**Knowledge boundaries:** The agent can only answer from what's in its knowledge folder. This prevents hallucination -- if the answer isn't in the files, it says so.
+
+**Voice:** Professional but warm. Knows the difference between "this product contains magnesium" (fact) and "this product will fix your sleep" (claim). The first is fine. The second crosses a line.
+
+This took 15 minutes of back and forth. Michele would suggest a rule, I'd ask "what's an example where this matters?", we'd refine it. By the end we had a document that actually matched how he thinks about his practice.
+
+### 6. Product catalog ingestion (15 minutes)
+
+Michele's shop has a sitemap listing all products. We wrote a script to crawl it, extract each product page as Markdown, and save everything to the knowledge folder.
+
+Then we set up a cron job to re-run it daily. New products? Automatically ingested. Price changes? Updated overnight. No manual maintenance.
+
+### 7. Voice messaging (10 minutes)
+
+Michele spends time commuting and walking between appointments. Typing is impractical during those windows. We installed Faster Whisper for speech-to-text so he could send voice messages through Telegram.
+
+The setup: `pip install faster-whisper`, configure the audio pipeline in Hermes, test with a 30-second Italian voice note. It worked on the first try.
+
+### 8. CRM import planning (13 minutes)
+
+The CRM data existed as a CSV export. The plan: convert each client record to a Markdown file in the knowledge folder. Hermes can then search clients by name, recall past interactions, and draft follow-ups.
+
+We didn't finish this during the session (it needs data cleanup first), but Michele left with a clear spec and the confidence to push it forward.
+
+## What made it work
+
+A few things I'd point to:
+
+**Teaching, not doing.** Every command was typed by Michele. He made typos, he fixed them, he learned. By the end, the terminal wasn't a scary black box. It was his tool.
+
+**Immediate wins.** Within 30 minutes he was talking to his assistant on Telegram. Within 45 minutes it was answering product questions. Momentum matters. If the first win takes two hours, people lose steam.
+
+**Personality before automation.** The SOUL file took 15 minutes out of 76. That sounds like a lot, but it's what makes the difference between "I have a chatbot" and "I have an assistant that thinks like I do." Every client I've worked with spends the most time here, and it's always worth it.
+
+**Ownership from day one.** The VPS is in Michele's Hetzner account. The API key is his. The GitHub repo is his. If I disappear tomorrow, nothing breaks. That's not an accident. It's the design.
+
+## What this means for small businesses
+
+Most small business owners don't need a "digital transformation." They need one process automated. One assistant that saves them two hours a week.
+
+Michele's assistant handles product questions, catalog updates, and soon client follow-ups. It runs on a €4/month server with no subscription fees. It understands his field and respects his boundaries.
+
+This kind of thing used to require a development team and a six-figure budget. Now it's an afternoon and a VPS.
+
+If you have a process that eats your time and you want to see if AI can handle it, I do consulting sessions like this one. [Get in touch.](/contact/)

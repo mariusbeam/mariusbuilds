@@ -1,0 +1,232 @@
+---
+title: How to Install Hermes Agent on a VPS (and Give It a Personality)
+description: A practical guide to self-hosting Hermes Agent on a VPS, picking the right model, and crafting a SOUL file that actually works.
+draft: false
+authors:
+  - marius-rusulet
+pubDate: 2026-06-06
+heroImage: ./heroImage.jpg
+categories:
+  - ai-automation
+  - self-hosting
+---
+
+You want an AI agent that runs 24/7, remembers things across conversations, and doesn't cost $200/month in API bills.
+
+The answer is Hermes Agent on a VPS. Here's how to do it without the headaches I ran into.
+
+## Why a VPS and not your laptop
+
+Your laptop sleeps. Your laptop goes offline. Your laptop can't receive a Telegram message at 3am when you're asleep.
+
+A VPS is just a computer in a data center that stays on. You rent it for about $5-10 a month. Hetzner, DigitalOcean, whatever. It has an IP address, you SSH into it, and you install things.
+
+The important bit: you control it. No platform lock-in, no "we changed our pricing," no one reading your conversations.
+
+## What you need
+
+- A VPS with at least 2GB RAM (I use Hetzner, 4GB is better)
+- Ubuntu 22.04 or 24.04
+- An API key from a model provider (I use OpenCode Go)
+- About 30 minutes
+
+## Step 1: Get a VPS
+
+If you're new to this, Hetzner Cloud is the sweet spot. Their CX22 (2 vCPU, 4GB RAM) is about €4/month. Create an account, spin up an Ubuntu instance, and you'll get a root password by email.
+
+SSH in:
+
+```bash
+ssh root@your-server-ip
+```
+
+First thing: update everything and create a non-root user. Running everything as root is asking for trouble.
+
+```bash
+apt update && apt upgrade -y
+adduser deploy
+usermod -aG sudo deploy
+```
+
+Now switch to that user and do the rest from there.
+
+## Step 2: Install Hermes
+
+One command:
+
+```bash
+curl -fsSL https://hermes-agent.nousresearch.com/install.sh | bash
+```
+
+That's it. The installer pulls in Python, Node.js, and everything else it needs. Takes about two minutes.
+
+After it finishes, reload your shell and run the setup wizard:
+
+```bash
+source ~/.bashrc
+hermes setup
+```
+
+## Step 3: Pick your model provider
+
+Hermes will ask which provider you want. The options: OpenAI, Anthropic, OpenRouter, OpenCode, Nous Portal, or a custom endpoint.
+
+I use **OpenCode Go**. Here's why.
+
+OpenCode Go is a provider optimized for coding agents. The models are cheap and fast. For most agent tasks -- file operations, research, writing, scheduling -- you don't need a $20/M-token model. You need something that responds in under a second and costs pennies.
+
+My config uses `deepseek-v4-pro` through OpenCode Go. For the 5% of tasks that need real reasoning, Hermes can escalate to a stronger model automatically.
+
+A few tips on model selection:
+
+- **Cheap model for 95% of work.** OpenCode Go, DeepSeek, or Qwen. These handle file ops, research, and writing just fine.
+- **Expensive model on standby.** Set up a fallback in config.yaml for when the agent hits something complex. I use `o4-mini` through OpenAI as my delegation model.
+- **Don't overpay for cron jobs.** Your daily briefings and git syncs don't need Claude. Set those to run on the cheap model. I went from $130 to $10 per 5 days for always-on agent usage just by routing tasks to the right model tier.
+
+Here's what that looks like in config.yaml:
+
+```yaml
+model:
+  default: ""
+  provider: opencode-go
+
+fallback_model:
+  provider: "openai"
+  model: "gpt-4o"
+
+delegation:
+  provider: "openai"
+  model: "o4-mini"
+```
+
+## Step 4: Connect Telegram (or whatever you use)
+
+Hermes talks to messaging platforms through a gateway. Telegram is the simplest to set up.
+
+```bash
+hermes gateway setup
+```
+
+Pick Telegram, create a bot through BotFather (Hermes walks you through it), paste the token. That's it. Now you can text your agent from your phone.
+
+One security tip: add your Telegram user ID to the allowlist in config.yaml. Otherwise anyone who discovers your bot can talk to your agent.
+
+```yaml
+gateway:
+  telegram:
+    allowed_user_ids:
+      - YOUR_TELEGRAM_ID
+```
+
+## Step 5: Give it a SOUL
+
+This is where most people stop. They have a working agent but it sounds like a generic chatbot. The SOUL file is what makes Hermes feel like *your* assistant, not just any assistant.
+
+The SOUL.md lives at `~/.hermes/SOUL.md` and gets injected at the start of every conversation. It defines:
+
+- Who you are (so the agent knows its context)
+- How it should talk (voice and tone)
+- What it should and shouldn't do
+- How it should handle files and research
+
+### The anatomy of a good SOUL
+
+Here's the structure I use, adapted from actual consulting sessions:
+
+**Section 1: Who you are.** Basic facts. Name, role, location, what you're working on. The agent uses this to ground its responses in your reality rather than generic assumptions.
+
+**Section 2: Voice and tone.** The single most underrated section. Without it, the agent defaults to helpful-corporate-speak. My rules:
+
+- Be concise. No fluff
+- Never use em dashes
+- Write like you talk, not like a press release
+- If it sounds like marketing copy, delete it
+
+One rule that changed everything for me: "presence over persuasion." The distinction between writing *at* someone (trying to convince) and writing *near* someone (stating what's true). A good agent doesn't sell you on things. It just says what it sees.
+
+**Section 3: Operating modes.** The agent should switch behavior depending on the task. Mine has:
+
+- Default mode: quick answers, file ops, get it done
+- Caveman words mode: explain complex things simply, zero jargon
+- Deep analysis mode: cross-reference everything, go hard
+- Therapist-lite mode: when I bring up psychological patterns, analyze them properly
+
+**Section 4: Tools and rules.** What it can do, what it can't. Where files live. The git protocol (pull before read, commit after write). Research expectations.
+
+**Section 5: Push-back rules.** This one matters. You want an agent that challenges you, not one that agrees with everything. My rules:
+
+- When I undersell myself, remind me of my credentials
+- When copy sounds like marketing, call it out
+- When I compare myself to established competitors, remind me I'm at Day 1 and they're at Year 5
+- When I'm over-iterating instead of shipping, push me to ship
+
+### A real SOUL excerpt
+
+From the section on how the agent should handle my work:
+
+```
+## How to Work
+
+### Voice & Tone
+
+The single most important rule: presence over persuasion. Write like
+Marius talks, not like you're selling something.
+
+Rules:
+- Be concise. No fluff. Get to the point.
+- Never use em dashes in any text.
+- Lowercase energy even in formal contexts. No warmup.
+- No moral, no lesson. State observations and let them land.
+- Plain words over jargon. "Build" and "use," not "leverage."
+- If it sounds like marketing copy, delete it.
+```
+
+See the pattern? Specific. Actionable. Tells the agent exactly what to avoid, not just what to do.
+
+## Step 6: The USER profile (shorter but critical)
+
+Alongside the SOUL, Hermes keeps a compact user profile. This is facts about you, not instructions for the agent.
+
+What to include:
+
+- Preferences (avoid subscriptions, prefer self-hosted, default to open-source)
+- Tech stack (what languages, what hosting, what tools)
+- Working style (collaborative, ship-first, hates wasted time)
+- Communication (language, directness, what frustrates you)
+
+Keep it under 1,500 characters. The agent reads this every turn alongside the SOUL, so every character costs tokens.
+
+## Step 7: Run it as a service
+
+You want Hermes running even when you're not SSH'd in. Create a systemd service:
+
+```bash
+hermes gateway install
+hermes gateway start
+```
+
+This keeps the gateway alive, reconnects if something crashes, and starts automatically on reboot.
+
+To check if it's running:
+
+```bash
+hermes gateway status
+```
+
+## What I'd do differently now
+
+After setting up Hermes for myself and for clients, a few things I'd change if I started fresh:
+
+**Start with the SOUL, not the tools.** The first hour should go into defining voice, rules, and context. Tools can be added later. A well-configured SOUL makes every subsequent interaction better.
+
+**Use the cheap model first.** New users tend to pick Claude or GPT-4 for everything and get a $200 bill week one. Start with OpenCode Go or DeepSeek. Only escalate when the agent actually fails a task.
+
+**Allowlist Telegram immediately.** I've seen people skip this and then wonder why their agent is responding to strangers. It takes 30 seconds. Do it.
+
+**Set up cron jobs for the boring stuff.** Daily git sync, morning briefings, weekly summaries. If you have to remember to tell your agent to do something, the setup is incomplete.
+
+## What's next
+
+Once Hermes is running, the real work starts: skills, cron jobs, the Obsidian vault. But this gets you from zero to a working, personality-driven agent in under an hour.
+
+If you want help setting this up for your business, I do this as a consultancy. We get on a call, I watch you type the commands (you learn faster that way), and you walk away with a running system. [Let's talk.](/contact/)

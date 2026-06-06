@@ -33,7 +33,7 @@ function reloadOnContentChange() {
 
 // https://astro.build/config
 export default defineConfig({
-  site: "https://atlas.cosmicthemes.com",
+  site: "https://mariusbuilds.com",
   server: {
     port: 4321,
     strictPort: true,

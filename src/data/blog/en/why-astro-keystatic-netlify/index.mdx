@@ -1,0 +1,113 @@
+---
+title: Why I Build Websites with Astro, Keystatic, and Netlify
+description: No databases, no monthly platform fees, no lock-in. Here's why this stack makes sense for small business websites and why I bet on it.
+draft: false
+authors:
+  - marius-rusulet
+pubDate: 2026-06-06
+heroImage: ./heroImage.jpg
+categories:
+  - web-development
+  - tools
+---
+
+I've built websites with WordPress, Webflow, Next.js, and plain HTML. After 10 years, I landed on a stack that I don't hate maintaining: Astro, Keystatic, and Netlify.
+
+Here's why each piece matters and how they fit together.
+
+## The problem with most website setups
+
+Before I explain the stack, let me name what I was trying to escape.
+
+**Monthly platform fees.** Every CMS-as-a-service charges per seat, per month, forever. WordPress itself is free but the hosting, security, and plugin ecosystem add up fast.
+
+**Content trapped in a database.** If the platform shuts down or raises prices, your content is stuck. Migrating means a messy export, broken formatting, and hours of cleanup.
+
+**Slow page loads.** Server-rendered pages that hit a database on every request. Add a few plugins and you're looking at 3-5 second load times.
+
+**Developer overhead.** Frameworks like Next.js are powerful but heavy. You're managing server-side rendering, API routes, and a build pipeline that feels like overkill for a marketing site with a blog.
+
+I wanted the opposite of all four.
+
+## Astro: a framework for content, not apps
+
+Astro is a web framework built for content-driven sites. Its pitch is simple: ship zero JavaScript by default.
+
+In most frameworks, every page loads a JavaScript bundle whether it needs interactivity or not. Astro takes the opposite approach. Your blog posts, about page, and landing sections render to plain HTML at build time. If a component doesn't need JavaScript, Astro strips it out.
+
+That means:
+- Pages load in under a second
+- SEO works out of the box (search engines see clean HTML)
+- Accessibility is better (less JS = fewer things that can break)
+
+When you do need interactivity (a contact form, a search bar), Astro lets you drop in React, Vue, or Svelte components exactly where they're needed. It's called the island architecture: islands of interactivity in a sea of static HTML.
+
+**Why this matters for small business sites.** Most small business websites are text, images, and a contact form. You don't need a full React app for that. Astro gives you a fast site without the complexity.
+
+## Keystatic: a CMS that lives in your Git repo
+
+Keystatic is the part that surprised me the most.
+
+Most CMSs store your content in a database. Keystatic stores it as Markdown and YAML files inside your Git repository. When an editor hits "save" in the admin panel, it commits to GitHub.
+
+This sounds like a developer thing, but it solves three real problems:
+
+**No lock-in.** Your content is just files. If you ever want to move away from Keystatic, you take your Markdown files with you. No export, no migration scripts, no vendor negotiations.
+
+**Version history for free.** Every change is a Git commit. You can see who changed what and when. You can roll back mistakes. This is built into Git -- Keystatic doesn't charge extra for it.
+
+**Your site is the CMS.** The admin panel runs inside your Astro project at `/keystatic`. No separate hosting, no API to maintain, no auth service. In development it writes to local files. In production it commits through GitHub.
+
+The tradeoffs are real: content scheduling and approval workflows are basic compared to something like Sanity or WordPress. For a solo consultant or small team (1-3 editors), this doesn't matter. For a newsroom with 50 editors, it would.
+
+I have three editors max. The simplicity is worth the trade.
+
+## Netlify: deploy from Git, forget about servers
+
+Netlify takes your Git repo and deploys it to a global CDN. Push to main, site updates. No servers to manage, no config files to tweak.
+
+What I like about Netlify specifically:
+
+**It just works with Astro.** Netlify detects Astro projects automatically and runs the right build command. The `@astrojs/netlify` adapter handles edge functions if you need them later.
+
+**Free tier is generous.** 100GB bandwidth, 300 build minutes per month. For a small business site, you'll likely never hit the limit.
+
+**Preview deployments.** Every pull request gets its own URL. You can see exactly what a change looks like before merging. This replaces the "can you check staging?" back-and-forth.
+
+**No server patching.** No WordPress updates, no PHP version upgrades, no plugin vulnerabilities. Netlify handles the infrastructure. You handle the content.
+
+## How the three fit together
+
+The workflow looks like this:
+
+1. I write content in the Keystatic admin panel (or directly in Markdown if I'm in a terminal)
+2. Keystatic saves it as a file in `src/data/blog/`
+3. I commit and push to GitHub
+4. Netlify sees the push, runs `astro build`, and deploys the static site
+5. The site is live in under a minute
+
+No databases. No monthly platform fees. No content trapped in a proprietary format. Just files in Git, rendered to HTML, served from a CDN.
+
+## What I'd change
+
+The stack isn't perfect. A few things I've learned:
+
+**Site URL matters.** I had mine set to a theme's default domain for weeks and didn't notice. Sitemaps and canonical URLs were pointing to the wrong place. Easy fix once you know to look, but easy to miss.
+
+**Image handling needs thought.** Keystatic stores images in your Git repo. That's fine for a blog with 50 posts. It gets unwieldy at 500. Keystatic Cloud Pro ($10/month) moves images to a CDN. For now, I keep them in the repo. If this site ever has hundreds of posts, I'll switch.
+
+**The Sharp dependency is annoying.** Astro uses Sharp for image optimization. On some systems it fails to install and you have to switch to the passthrough image service. Not a dealbreaker, but something that wastes an hour the first time you hit it.
+
+## Why this matters for clients
+
+When I build a website for a small business, I want them to own it. Not rent it.
+
+This stack means:
+- Their content is Markdown files on their own GitHub account
+- Their domain points to their Netlify account
+- If they ever want to move, the content is portable and the site is static HTML
+- They pay for the domain (about $12/year) and nothing else
+
+Compare that to a WordPress site on a managed host: $20-30/month, content in a database, and a migration process that makes people put it off for years.
+
+I'd rather build something simple that lasts than something complicated that needs constant maintenance. Astro, Keystatic, and Netlify are the closest I've come to that.
