@@ -1,12 +1,14 @@
 ---
 /**
  * Homepage services as icon cards (Landing 2 style). Pass `content` from the page.
+ * Now supports `illustration` field on items to replace icons with custom SVG illustrations.
  */
 import ServiceCard from "@components/ServiceCard/ServiceCardIcon.astro";
 import Badge from "@components/Badge/Badge.astro";
 
 interface ServiceItem {
   icon: string;
+  illustration?: string;
   title: string;
   text: string;
   href: string;
@@ -75,6 +77,7 @@ const buttonText = content.buttonText ?? "Learn more";
             title={feature.title}
             text={feature.text}
             icon={feature.icon}
+            illustration={feature.illustration}
             href={feature.href}
             buttonText={buttonText}
             idx={idx}

@@ -19,14 +19,44 @@ import { getHomepagePageData } from "@js/homepageUtils";
 const currLocale = getLocaleFromUrl(Astro.url);
 const siteData = getTranslatedData("siteData", currLocale);
 const homepage = await getHomepagePageData(currLocale);
+
+// Inject custom SVG illustrations into card sections
+const illustrations = {
+  howIWork: [
+    "/illustrations/01-we-talk.svg",
+    "/illustrations/02-build-or-buy.svg",
+    "/illustrations/03-i-build-it.svg",
+  ],
+  services: [
+    "/illustrations/04-custom-tools.svg",
+    "/illustrations/05-ai-automation.svg",
+    "/illustrations/06-custom-websites.svg",
+  ],
+};
+
+const howIWorkContent = {
+  ...homepage.howIWork,
+  items: homepage.howIWork.items.map((item, i) => ({
+    ...item,
+    illustration: illustrations.howIWork[i],
+  })),
+};
+
+const servicesContent = {
+  ...homepage.mainServices,
+  items: homepage.mainServices.items.map((item, i) => ({
+    ...item,
+    illustration: illustrations.services[i],
+  })),
+};
 ---
 
 <BaseLayout title={siteData.title} description={siteData.description}>
   <HeroSideImage hero={homepage.hero} />
 
-  <FeatureCardsMedium content={homepage.howIWork} />
+  <FeatureCardsMedium content={howIWorkContent} />
 
-  <ServicesIcon content={homepage.mainServices} />
+  <ServicesIcon content={servicesContent} />
 
   <HomepageBlogPreview content={homepage.blog} />
 

@@ -1,11 +1,13 @@
 ---
 /**
  * Medium icon cards. Theme demo defaults — pass `content` from the page for real copy.
+ * Now supports `illustrations` array to replace icons with custom SVG illustrations.
  */
 import FeatureCard from "@components/FeatureCard/FeatureCardMedium.astro";
 
 interface FeatureData {
   icon: string;
+  illustration?: string;
   title: string;
   text: string;
 }
@@ -66,7 +68,7 @@ const showHeader = Boolean(content.title);
     <div id="trigger-medium-cards" class="grid gap-4 md:grid-cols-3" data-mos="fade-left">
       {
         content.items.map((feature) => (
-          <FeatureCard title={feature.title} text={feature.text} icon={feature.icon} />
+          <FeatureCard title={feature.title} text={feature.text} icon={feature.icon} illustration={feature.illustration} />
         ))
       }
     </div>

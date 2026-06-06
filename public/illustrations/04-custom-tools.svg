@@ -1,0 +1,18 @@
+<svg viewBox="0 0 280 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect x="26" y="24" width="40" height="28" rx="6" stroke="rgba(255,255,255,0.1)" stroke-width="1" fill="none"/>
+  <rect x="78" y="14" width="40" height="28" rx="6" stroke="rgba(255,255,255,0.1)" stroke-width="1" fill="none"/>
+  <rect x="130" y="14" width="40" height="28" rx="6" stroke="rgba(255,255,255,0.1)" stroke-width="1" fill="none"/>
+  <rect x="182" y="24" width="40" height="28" rx="6" stroke="rgba(255,255,255,0.1)" stroke-width="1" fill="none"/>
+  <rect x="210" y="60" width="40" height="28" rx="6" stroke="rgba(255,255,255,0.1)" stroke-width="1" fill="none"/>
+  <rect x="182" y="96" width="40" height="28" rx="6" stroke="rgba(255,255,255,0.08)" stroke-width="1" fill="none"/>
+  <rect x="36" y="32" width="20" height="3" rx="1.5" fill="rgba(255,255,255,0.05)"/>
+  <rect x="88" y="22" width="20" height="3" rx="1.5" fill="rgba(255,255,255,0.05)"/>
+  <rect x="140" y="22" width="20" height="3" rx="1.5" fill="rgba(255,255,255,0.05)"/>
+  <rect x="192" y="32" width="20" height="3" rx="1.5" fill="rgba(255,255,255,0.05)"/>
+  <rect x="220" y="68" width="20" height="3" rx="1.5" fill="rgba(255,255,255,0.04)"/>
+  <rect x="192" y="104" width="20" height="3" rx="1.5" fill="rgba(255,255,255,0.03)"/>
+  <polygon points="112,64 128,56 144,64 144,80 128,88 112,80" stroke="#fdbb3e" stroke-width="1.5" fill="none"/>
+  <rect x="120" y="66" width="16" height="4" rx="2" fill="#fdbb3e" fill-opacity="0.2"/>
+  <rect x="120" y="74" width="10" height="3" rx="1.5" fill="rgba(255,255,255,0.08)"/>
+  <text x="128" y="128" fill="#fdbb3e" font-size="7" font-family="Nunito,sans-serif" font-weight="700" text-anchor="middle" fill-opacity="0.45">CUSTOM FIT</text>
+</svg>

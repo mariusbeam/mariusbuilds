@@ -8,12 +8,14 @@ import { locales } from "@/config/siteSettings.json";
 
 export interface HomepageCardItem {
   icon: string;
+  illustration?: string;
   title: string;
   text: string;
 }
 
 export interface HomepageServiceItem {
   icon: string;
+  illustration?: string;
   title: string;
   text: string;
   href: string;

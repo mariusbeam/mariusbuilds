@@ -1,6 +1,7 @@
 ---
 /**
  * * These are medium sized cards with icons, titles, and text
+ * * Now also supports custom SVG illustrations via the `illustration` prop.
  *
  * ! I copy all icons into the src/icons folder and recommend you do the same
  * ! If the icon is at src/icons/tabler/paint.svg then you put in "tabler/paint"
@@ -10,23 +11,30 @@ import { Icon } from "astro-icon/components";
 
 interface Props {
   icon: string;
+  illustration?: string; // path to custom SVG illustration (e.g. "/illustrations/01-we-talk.svg")
   title: string;
   text: string;
   rest?: any; // catch-all for any additional parameters, such as "aria-label"
 }
 
-const { icon, title, text, ...rest } = Astro.props as Props;
+const { icon, illustration, title, text, ...rest } = Astro.props as Props;
 ---
 
 <div
   class="dark:hover:bg-base-900 rounded-md p-8 text-center transition duration-200 hover:bg-white hover:shadow-xl"
   {...rest}
 >
-  <div
-    class="surface-primary mx-auto mb-7 inline-flex size-16 items-center justify-center rounded-lg"
-  >
-    <Icon name={icon} class="size-6" aria-hidden="true" />
-  </div>
+  {illustration ? (
+    <div class="mx-auto mb-7 flex items-center justify-center">
+      <img src={illustration} alt="" class="h-28 w-auto" aria-hidden="true" />
+    </div>
+  ) : (
+    <div
+      class="surface-primary mx-auto mb-7 inline-flex size-16 items-center justify-center rounded-lg"
+    >
+      <Icon name={icon} class="size-6" aria-hidden="true" />
+    </div>
+  )}
   <h3 class="h3 mb-3">{title}</h3>
   <p class="description">{text}</p>
 </div>
