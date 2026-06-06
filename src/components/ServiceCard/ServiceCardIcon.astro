@@ -1,12 +1,9 @@
 ---
 /**
- * * These are cards with icons, titles, text, and a url
- * * Now also supports custom SVG illustrations via the `illustration` prop.
- * Recommend using minimum 3 cards in a row, although this should work for any number of cards
- * These smaller cards work great if there are a large amount of services to advertise
+ * Dark card with illustration, number badge, title, text, link, and button.
+ * Matches the card style proof design for the services section.
  *
- * ! I copy all icons into the src/icons folder and recommend you do the same
- * ! If the icon is at src/icons/tabler/paint.svg then you put in "tabler/paint"
+ * When `illustration` is provided, renders a custom SVG instead of the Tabler icon.
  */
 
 import { Icon } from "astro-icon/components";
@@ -19,17 +16,18 @@ import { getLocaleFromUrl } from "@js/localeUtils";
 import { getLocalizedRoute } from "@js/translationUtils";
 
 interface Props {
-  icon: string; // icon string for astro-icon
-  illustration?: string; // path to custom SVG illustration
+  icon: string;
+  illustration?: string;
+  cardNumber?: string;
   title: string;
   text: string;
   href: string;
   buttonText?: string;
-  idx: number; // determines which "blob" icon svg to use. There are 4 options (0-3)
-  rest?: any; // catch-all for any additional parameters, such as "aria-label"
+  idx: number;
+  rest?: any;
 }
 
-const { icon, illustration, title, text, href, buttonText = "Learn more", idx, ...rest } = Astro.props as Props;
+const { icon, illustration, cardNumber, title, text, href, buttonText = "Learn more", idx, ...rest } = Astro.props as Props;
 
 const currLocale = getLocaleFromUrl(Astro.url);
 ---
@@ -37,25 +35,32 @@ const currLocale = getLocaleFromUrl(Astro.url);
 <div {...rest} class="h-full">
   <a
     href={getLocalizedRoute(currLocale, href)}
-    class="group dark:hover:bg-base-900 flex h-full flex-col justify-between overflow-hidden rounded-xl px-4 py-8 text-center transition-all duration-300 hover:bg-white hover:shadow-xl"
+    class="group flex h-full flex-col items-start gap-5 rounded-2xl border border-white/[0.06] bg-[#141414] p-8 transition-colors duration-200 hover:border-white/[0.12]"
   >
-    <div>
-      {illustration ? (
-        <div class="mx-auto mb-7 flex items-center justify-center">
-          <img src={illustration} alt="" class="h-28 w-auto" aria-hidden="true" />
-        </div>
-      ) : (
-        <div
-          class="surface-primary mx-auto mb-7 inline-flex size-16 items-center justify-center rounded-lg"
-        >
-          <Icon name={icon} class="size-7" aria-hidden="true" />
-        </div>
-      )}
+    {/* Card number or icon */}
+    {cardNumber ? (
+      <span class="text-xs font-extrabold uppercase tracking-[0.1em] text-[#fdbb3e]">{cardNumber}</span>
+    ) : illustration ? null : (
+      <div class="surface-primary inline-flex size-12 items-center justify-center rounded-lg">
+        <Icon name={icon} class="size-6" aria-hidden="true" />
+      </div>
+    )}
 
-      <h3 class="h3 mb-3">{title}</h3>
-      <p class="description text-pretty">{text}</p>
+    {/* Illustration */}
+    {illustration && (
+      <div class="flex w-full items-center justify-center">
+        <img src={illustration} alt="" class="h-32 w-auto" aria-hidden="true" />
+      </div>
+    )}
+
+    {/* Title + text */}
+    <div class="flex flex-1 flex-col gap-2">
+      <h3 class="text-lg font-bold text-white leading-snug">{title}</h3>
+      <p class="text-sm text-[#8b8b8b] leading-relaxed">{text}</p>
     </div>
-    <div class="mt-6 flex justify-center">
+
+    {/* Button */}
+    <div class="mt-auto flex justify-start pt-2">
       <Button variant="outline" arrow="right">
         {buttonText} <span class="sr-only">about {title}</span>
       </Button>

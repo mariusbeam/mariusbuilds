@@ -1,40 +1,49 @@
 ---
 /**
- * * These are medium sized cards with icons, titles, and text
- * * Now also supports custom SVG illustrations via the `illustration` prop.
+ * Dark card with illustration, number badge, title, and text.
+ * Matches the card style proof design.
  *
- * ! I copy all icons into the src/icons folder and recommend you do the same
- * ! If the icon is at src/icons/tabler/paint.svg then you put in "tabler/paint"
+ * When `illustration` is provided, renders a custom SVG instead of the Tabler icon.
+ * `cardNumber` adds a numbered badge (01, 02, etc.) in the accent color.
  */
 
 import { Icon } from "astro-icon/components";
 
 interface Props {
   icon: string;
-  illustration?: string; // path to custom SVG illustration (e.g. "/illustrations/01-we-talk.svg")
+  illustration?: string;
+  cardNumber?: string;
   title: string;
   text: string;
-  rest?: any; // catch-all for any additional parameters, such as "aria-label"
+  rest?: any;
 }
 
-const { icon, illustration, title, text, ...rest } = Astro.props as Props;
+const { icon, illustration, cardNumber, title, text, ...rest } = Astro.props as Props;
 ---
 
 <div
-  class="dark:hover:bg-base-900 rounded-md p-8 text-center transition duration-200 hover:bg-white hover:shadow-xl"
+  class="group flex flex-col items-start gap-5 rounded-2xl border border-white/[0.06] bg-[#141414] p-8 transition-colors duration-200 hover:border-white/[0.12]"
   {...rest}
 >
-  {illustration ? (
-    <div class="mx-auto mb-7 flex items-center justify-center">
-      <img src={illustration} alt="" class="h-28 w-auto" aria-hidden="true" />
-    </div>
-  ) : (
-    <div
-      class="surface-primary mx-auto mb-7 inline-flex size-16 items-center justify-center rounded-lg"
-    >
+  {/* Card number or icon */}
+  {cardNumber ? (
+    <span class="text-xs font-extrabold uppercase tracking-[0.1em] text-[#fdbb3e]">{cardNumber}</span>
+  ) : illustration ? null : (
+    <div class="surface-primary inline-flex size-12 items-center justify-center rounded-lg">
       <Icon name={icon} class="size-6" aria-hidden="true" />
     </div>
   )}
-  <h3 class="h3 mb-3">{title}</h3>
-  <p class="description">{text}</p>
+
+  {/* Illustration */}
+  {illustration && (
+    <div class="flex w-full items-center justify-center">
+      <img src={illustration} alt="" class="h-32 w-auto" aria-hidden="true" />
+    </div>
+  )}
+
+  {/* Title + text */}
+  <div class="flex flex-col gap-2">
+    <h3 class="text-lg font-bold text-white leading-snug">{title}</h3>
+    <p class="text-sm text-[#8b8b8b] leading-relaxed">{text}</p>
+  </div>
 </div>

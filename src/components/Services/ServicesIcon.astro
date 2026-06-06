@@ -78,6 +78,7 @@ const buttonText = content.buttonText ?? "Learn more";
             text={feature.text}
             icon={feature.icon}
             illustration={feature.illustration}
+            cardNumber={String(idx + 1).padStart(2, "0")}
             href={feature.href}
             buttonText={buttonText}
             idx={idx}
