@@ -35,7 +35,7 @@ const currLocale = getLocaleFromUrl(Astro.url);
 <div {...rest} class="h-full">
   <a
     href={getLocalizedRoute(currLocale, href)}
-    class="group flex h-full flex-col items-start gap-5 rounded-2xl border border-white/[0.06] bg-[#141414] p-8 transition-colors duration-200 hover:border-white/[0.12]"
+    class="group flex h-full flex-col items-start gap-5 rounded-2xl border border-white/[0.06] bg-base-900 p-8 transition-colors duration-200 hover:border-white/[0.12]"
   >
     {/* Card number or icon */}
     {cardNumber ? (
