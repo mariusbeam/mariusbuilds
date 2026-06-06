@@ -94,8 +94,8 @@ Pushing code to GitHub does **not** create a Cloud project. You add it once in t
 
 ### 1. Create the project (one-time)
 
-1. Sign in at [keystatic.cloud](https://keystatic.cloud) with the same GitHub account that owns the repo (**mariusbeam**).
-2. **Create a team** (e.g. `mariusbeam`). The team name becomes the first part of your project ID.
+1. Sign in at [keystatic.cloud](https://keystatic.cloud) with the same GitHub account that owns the repo (**mariusbeam** on GitHub).
+2. **Create a team** (e.g. `mariusbuilds`). The team **slug** becomes the first part of your project ID (it may differ from your GitHub username).
 3. **Create a project** inside that team:
    - Connect GitHub repository: **`mariusbeam/mariusbuilds`**
    - If the repo does not appear, click to **configure GitHub app access** and allow Keystatic for that repo (or all repos).
@@ -103,7 +103,7 @@ Pushing code to GitHub does **not** create a Cloud project. You add it once in t
 4. Open the project → **Settings**. Copy the **project** string. It looks like:
 
    ```text
-   mariusbeam/mariusbuilds
+   mariusbuilds/mariusbuilds
    ```
 
    (your team slug + `/` + your project slug — Keystatic shows the exact string to paste.)
@@ -115,14 +115,14 @@ Pushing code to GitHub does **not** create a Cloud project. You add it once in t
 1. Site → **Site configuration** → **Environment variables**
 2. Add variable:
    - **Key:** `KEYSTATIC_CLOUD_PROJECT`
-   - **Value:** the string from step 1 (e.g. `mariusbeam/mariusbuilds`)
+   - **Value:** the string from step 1 (e.g. `mariusbuilds/mariusbuilds`)
 3. **Deploys** → **Trigger deploy** → **Deploy site** (so the new variable is picked up).
 
 **Locally** (only if you want to test Cloud mode on your machine):
 
 ```bash
 cp .env.example .env
-# Edit .env and set KEYSTATIC_CLOUD_PROJECT=mariusbeam/mariusbuilds
+# Edit .env and set KEYSTATIC_CLOUD_PROJECT=mariusbuilds/mariusbuilds
 ```
 
 Then run `npm run build && npm run preview` — note: Netlify adapter preview is limited; Cloud editing is mainly tested on the deployed site.
@@ -138,7 +138,8 @@ After you save in Cloud, Keystatic commits to GitHub → Netlify rebuilds → th
 
 ### 4. If the project still does not show in your account
 
-- You are signed into Keystatic with a **different GitHub user** than **mariusbeam**.
+- You are signed into Keystatic with a **different GitHub user** than the one on the team.
+- **`KEYSTATIC_CLOUD_PROJECT` uses the wrong team slug** — e.g. `mariusbeam/mariusbuilds` when your Keystatic team is `mariusbuilds` → use `mariusbuilds/mariusbuilds` (copy the exact string from project Settings).
 - The GitHub app was not granted access to **mariusbuilds** (fix under GitHub → Settings → Applications → Keystatic).
 - You created a project on a **different team** — check the team switcher at the top of [keystatic.cloud](https://keystatic.cloud).
 

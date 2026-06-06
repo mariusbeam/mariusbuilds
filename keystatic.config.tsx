@@ -20,7 +20,7 @@ const isDev = import.meta.env.DEV === true;
 
 /** Set on Netlify after creating a project at https://keystatic.cloud (see CMS.md). */
 const keystaticCloudProject =
-  import.meta.env.KEYSTATIC_CLOUD_PROJECT ?? "mariusbeam/mariusbuilds";
+  import.meta.env.KEYSTATIC_CLOUD_PROJECT ?? "mariusbuilds/mariusbuilds";
 
 export default config({
   // Local files in dev; Keystatic Cloud in production
