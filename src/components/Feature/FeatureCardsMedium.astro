@@ -68,7 +68,7 @@ const showHeader = Boolean(content.title);
     <div id="trigger-medium-cards" class="grid gap-4 md:grid-cols-3" data-mos="fade-left">
       {
         content.items.map((feature, i) => (
-          <FeatureCard title={feature.title} text={feature.text} icon={feature.icon} illustration={feature.illustration} cardNumber={String(i + 1).padStart(2, "0")} />
+          <FeatureCard title={feature.title} text={feature.text} illustration={feature.illustration} />
         ))
       }
     </div>

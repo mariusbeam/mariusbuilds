@@ -25,7 +25,7 @@ interface Props {
   rest?: any;
 }
 
-const { icon, illustration, cardNumber, title, text, href, buttonText = "Learn more", idx, ...rest } = Astro.props as Props;
+const { illustration, title, text, href, buttonText = "Learn more", ...rest } = Astro.props as Props;
 
 const currLocale = getLocaleFromUrl(Astro.url);
 ---
