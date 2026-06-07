@@ -30,7 +30,7 @@ const authorsData = await getEntries(authors);
     href={getLocalizedRoute(currLocale, `/blog/${post.id}/`)}
     class="flex aspect-video max-h-96 shrink-0 justify-center overflow-hidden rounded-md sm:justify-normal"
   >
-    <figure>
+    <figure class="w-full">
       <Image
         src={heroImage}
         alt={`Cover for ${title}`}
