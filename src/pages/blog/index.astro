@@ -37,7 +37,7 @@ const posts = await getAllPosts(currLocale);
       </div>
     </div>
 
-    <div class="grid gap-8 gap-y-10 md:grid-cols-2">
+    <div class="grid grid-cols-1 gap-8 gap-y-10 md:grid-cols-2">
       {posts.map((post) => <PostCard post={post} showDescription={true} data-mos="fade-up" />)}
     </div>
   </section>

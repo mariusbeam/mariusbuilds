@@ -23,7 +23,7 @@ const authorsData = await getEntries(authors);
 const postHref = getLocalizedRoute(currLocale, `/blog/${post.id}/`);
 ---
 
-<article class:list={["group flex h-full flex-col", className]} {...rest}>
+<article class:list={["group flex h-full w-full flex-col", className]} {...rest}>
   <a
     href={postHref}
     class="block aspect-[4/3] max-h-44 overflow-hidden rounded-md sm:max-h-48"
