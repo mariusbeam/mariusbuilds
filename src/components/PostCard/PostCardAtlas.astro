@@ -28,7 +28,7 @@ const authorsData = await getEntries(authors);
 <article class={`w-full ${className || ''}`} {...rest}>
   <a
     href={getLocalizedRoute(currLocale, `/blog/${post.id}/`)}
-    class="flex aspect-video max-h-96 shrink-0 justify-center overflow-hidden rounded-md sm:justify-normal"
+    class="block w-full aspect-video max-h-96 overflow-hidden rounded-md"
   >
     <figure class="w-full">
       <Image
