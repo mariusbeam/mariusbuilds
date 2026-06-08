@@ -1,0 +1,95 @@
+---
+title: How I Built an AI Automation Business With Zero Monthly SaaS Costs
+description: "Most AI consultants burn money on subscriptions before they ship anything. Here's the stack I use: one VPS, free tools, and the philosophy that you shouldn't pay rent on your own infrastructure."
+draft: false
+authors:
+  - marius-rusulet
+pubDate: 2026-06-08
+heroImage: ./heroImage.jpg
+categories:
+  - ai-automation
+  - business
+  - self-hosting
+---
+
+I run an AI automation business. My monthly SaaS bill is zero.
+
+No ChatGPT Teams. No Make. No Zapier. No Notion. No hosting platform that charges per seat. One VPS, some open-source tools, and a few pay-as-you-go APIs that cost less than a pizza.
+
+Here's the full stack and why I built it this way.
+
+## The hardware: one VPS
+
+I rent a Hetzner VPS for €4/month. 2 vCPU, 4GB RAM, Ubuntu. That's the entire server bill.
+
+My AI assistant, Hermes, runs on it 24/7. It syncs my notes, answers questions from my phone via Telegram, runs scheduled tasks, and builds things when I tell it to.
+
+Most people ask: "can't you just run it on your laptop?" You can. But your laptop sleeps. Your laptop goes offline. A VPS is always on. It runs cron jobs at 3am. It receives messages while you're commuting. It doesn't care if you close the lid.
+
+## The brain: Obsidian + GitHub (free)
+
+I keep everything in an Obsidian vault synced via GitHub. Project notes, meeting transcripts, competitive research, daily logs, decisions. It's just a folder of markdown files. No proprietary format, no lock-in, no monthly fee.
+
+Hermes reads and writes to this vault directly. When I learn something new about a competitor, it gets saved. When I make a decision, it's documented with reasoning. When I finish a session, the daily note updates automatically.
+
+This is my second brain. Searchable, portable, free.
+
+## The AI: Hermes Agent (open-source, self-hosted)
+
+Hermes Agent is the open-source framework that powers everything. I installed it on my VPS in about 30 minutes. It connects to my Obsidian vault, my Telegram, and a handful of APIs.
+
+The model costs are pay-per-use. I route cheap tasks to a fast model and escalate complex ones to a smarter model. My API bill went from $130 to $10 per 5 days by being deliberate about which model handles what.
+
+This is the opposite of a SaaS subscription. I pay for what I use. Some days it's 20 cents. Some days it's 2 euros. No monthly minimum.
+
+## The tools: free and one-time-cost only
+
+**apify** — Web scraping when I need it. Pay per scrape, not per month. I use it for market research, competitor analysis, and extracting data from websites that block simple crawlers. A Reddit scrape costs about 30 cents.
+
+**Netlify** — Free tier for static site hosting. My business site, mariusbuilds.com, deploys from GitHub in seconds. No monthly hosting fee. If Netlify ever becomes a problem, the same static files deploy anywhere.
+
+**Astro** — The framework I build websites with. Open-source. Static output. No server to maintain, no database to patch, no plugin updates that break things.
+
+**Keystatic** — Git-based CMS. Content lives in the repo as markdown. No database. No vendor lock-in. If Keystatic disappears tomorrow, my content is still there in plain text files.
+
+**Browserbase** — Real browser automation for when I need to interact with JavaScript-heavy pages or test things visually. Pay per session.
+
+## What I don't pay for
+
+No project management tool. My Obsidian vault handles that.
+
+No CRM. Hermes tracks interactions in markdown files.
+
+No email marketing platform. Not at this stage. When I need one, I'll self-host Listmonk.
+
+No design tool subscriptions. I use open-source alternatives or generate assets with my AI agent.
+
+No cloud functions, no serverless databases, no per-seat pricing on anything.
+
+## The philosophy: own your infrastructure
+
+Every SaaS subscription is a decision to rent instead of own. Sometimes that's the right call. But for an AI automation business, the tools you rely on should be tools you control.
+
+If Apify changes pricing tomorrow, I can switch to a different scraping approach. If Netlify goes away, my static sites deploy anywhere. If my model provider raises prices, I swap API keys.
+
+There is no platform where my entire business lives. No single point of dependency. No "we changed our pricing" email that ruins my month.
+
+## What this actually costs
+
+| thing | cost |
+|---|---|
+| Hetzner VPS (primary) | €4/month |
+| Second VPS (client projects) | €4/month |
+| API usage (models, scraping) | ~€15-25/month |
+| Domain (mariusbuilds.com) | ~€10/year |
+| **Total monthly burn** | **~€25-35** |
+
+That's it. Twenty-five to thirty-five euros a month to run an AI automation business with a 24/7 agent, a second brain, and full infrastructure control.
+
+## Is this for everyone?
+
+No. This stack requires comfort with the terminal. You need to be okay with SSH, git, and editing config files. If you've never opened a terminal, this will frustrate you.
+
+But if you're technical, or willing to learn, the reward is independence. No one can shut down your business by changing their API. No one can hold your data hostage. No one can raise your bill by 3x and leave you with no alternative.
+
+You don't need 12 SaaS tools to run an AI business. You need one VPS, some open-source software, and the willingness to own what you build.

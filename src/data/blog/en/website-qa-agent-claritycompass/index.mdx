@@ -1,0 +1,78 @@
+---
+title: I Built an AI Agent That Audits Websites in 2 Minutes
+description: I pointed my AI agent at a real psychology practice website and let it click every button, check every form, and read every line. Here's what it found in under 2 minutes.
+draft: false
+authors:
+  - marius-rusulet
+pubDate: 2026-06-08
+heroImage: ./heroImage.jpg
+categories:
+  - ai-automation
+  - case-studies
+---
+
+I built a thing that audits websites. You send it a URL, it clicks buttons, checks console errors, validates forms, reads the sitemap, and spits out a scored report. Takes about two minutes.
+
+To test it, I pointed it at a real psychology practice in Eindhoven. Here's what happened.
+
+## What the agent actually does
+
+It's a skill I wrote for my AI assistant, Hermes. I send a link in Telegram, say "audit this," and it runs nine checks:
+
+1. Page loads properly, no redirect loops
+2. Console errors. JavaScript exceptions, failed API calls, 404s
+3. All navigation links exist and go somewhere
+4. Every CTA button leads to a real destination
+5. Forms have labels, validation works
+6. Sitemap covers all claimed pages
+7. Content quality. No lorem ipsum, no typos, no broken images
+8. Screenshot at phone and desktop widths
+9. SEO basics. Title, meta, H1, alt text
+
+It uses a real browser. Not a crawler. It clicks things. It opens the console. It interacts with the page like a human would. Then it writes a report in the same format every time: Critical, Warnings, Info, Score.
+
+## The test subject: a real psychology practice
+
+I ran it on [Clarity Compass](https://claritycompass.nl), a certified psychologist in Eindhoven. Clean site, good content, well-designed. The kind of site where you expect everything to work.
+
+The agent found three critical issues and five warnings.
+
+### The critical stuff
+
+**FAQ section is completely broken.** Seven questions. Zero answers. Clicking does nothing. The accordion JavaScript isn't firing. This is the most impactful bug on the page. The FAQ is where potential clients go when they're hesitant. It's the last stop before the contact form or the back button.
+
+**Five JavaScript exceptions in the console.** All empty-message errors, accumulating across page interactions. Probably from the testimonials widget or the cookie consent script. Any one of these could silently break another feature tomorrow.
+
+**Hidden page in the sitemap.** `/therapy-for-expats` is listed in sitemap.xml but has zero links from the navigation or anywhere else on the page. Google indexes it, users can't find it. Either it should be in the nav or removed from the sitemap.
+
+### The warnings
+
+**"Book Now" buttons go to the contact form, not the booking page.** The `/bookings` page exists and shows clear pricing (€60-100 per session). But every CTA on the homepage scrolls to the contact form instead. Someone ready to book has to hunt for the actual booking page.
+
+**Widget attribution visible on the live site.** "Collect testimonials with Senja" sits at the bottom of the testimonials section. It's a free-plan watermark. Looks unprofessional.
+
+**Truncated paragraph.** The text about the temperament test starts mid-sentence: "that many clients find incredibly insightful..." The opening clause is cut off. CSS overflow or a copy error.
+
+**No image tags detected.** The agent couldn't find any `<img>` elements on the homepage. Images might be CSS backgrounds. This hurts SEO and accessibility.
+
+**Cookie consent re-appears on every page.** Should persist after first acceptance via localStorage. Instead it pops up on every navigation.
+
+### What was good
+
+The content quality is high. The H1 is clear and SEO-friendly. The `/bookings` page is transparent about pricing and insurance. Contact channels are complete. Privacy statement exists and is linked. The single-page design works well on mobile.
+
+**Score: 6/10.** Solid foundation. Fix the FAQ accordion and reroute the CTAs, and it jumps to an 8.
+
+## Why this matters for small businesses
+
+Most small businesses have a website they barely maintain. They don't have a QA department. They don't have anyone checking console errors or clicking every button after a plugin update.
+
+The things this agent found are not exotic. They're mundane. A broken FAQ. A misrouted button. A widget watermark. But they're exactly the kind of things that make a visitor leave and never come back.
+
+The point is not that this psychology practice has a broken website. It doesn't. It has a good website with a few things broken. The point is that finding those things took two minutes and cost nothing.
+
+## You don't need a bigger budget. You need a tighter checklist.
+
+I built this agent because I was tired of doing manual QA. Now it's just another tool in my assistant's toolbox. I send a URL, I get a report, I fix things or tell the client what to fix.
+
+That's the whole pitch for AI automation. Not magical transformation. Not "10x your business." Just: here's a thing that used to take two hours, now it takes two minutes, and the output is better.
