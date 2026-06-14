@@ -6,18 +6,18 @@
 export const aboutData = {
   metaTitle: "About",
   metaDescription:
-    "Mechatronics engineer with 10 years in complex systems. Now building custom tools, automations, and websites for small businesses.",
+    "I build custom tools and automations for small businesses. 10 years of engineering behind it, learned web development on the side to work from anywhere.",
   hero: {
     badge: "",
     title: "Hi, I'm Marius.",
     subhead:
-      "Mechatronics engineer. 10 years making complex systems work. Now I build custom tools, automations, and websites for small businesses.",
+      "I build custom tools and automations for small businesses. Before this, I spent 10 years as a mechatronics engineer making industrial systems work. I learned web development on the side because I wanted to be able to work from anywhere.",
   },
   story: {
     title: "The longer version",
     paragraphs: [
-      "I spent a decade in industrial robotics, logistics automation, and high-tech integration at one of Europe's most advanced technology companies. Places where systems have to work and downtime costs real money. I learned to think in systems, design for the edge cases, and build things that hold up under pressure.",
-      "Now I point that same thinking at small businesses. Usually it's one specific thing they want built: a tool that fits their process, an automation that just works, a website they actually own. That's the work I like best.",
+      "I started in industrial automation, then moved to integrating complex lithography machines. Along the way I started learning web development on my own time. That mix of hardware, software, high-stakes systems, and the web gave me a pretty wide lens. It means when a business owner tells me their process, I can usually see where it's breaking and what would actually fix it.",
+      "So I taught myself web development and started building things on my own time. First for fun, then for friends, then for paying clients. The engineering background stuck: I still think about failure modes, still design for the person who'll use the thing, still prefer straightforward tools over shiny ones. But now I do it from my own setup, for people who actually need it.",
       "When you work with me, you work with me. I'm the person on the call and the person writing the code. No sales team, no junior dev, no handoffs. One engineer, start to finish.",
       "I also build in public. I use custom tools and AI heavily in my own work, I publish how I build things, and I keep a short, honest list of the tools I actually use. If you want to see how I think before you hire me, read the blog.",
     ],
