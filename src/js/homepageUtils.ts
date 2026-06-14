@@ -49,6 +49,7 @@ export interface HomepageContent {
     description: string;
     items: HomepageServiceItem[];
     buttonText: string;
+    buttonHref: string;
   };
   faq: {
     badge?: string;
@@ -103,6 +104,7 @@ function mergeHomepageCopy(data?: HomepageCopyEntry) {
       title: pick(data?.mainServices.title, fb.mainServices.title),
       description: pick(data?.mainServices.description, fb.mainServices.description ?? ""),
       buttonText: pick(data?.mainServices.buttonText, fb.mainServices.buttonText),
+      buttonHref: pick(data?.mainServices.buttonHref, fb.mainServices.buttonHref),
     },
     faq: {
       badge: pick(data?.faq?.badge, fb.faq.badge ?? ""),

@@ -38,6 +38,7 @@ export default config({
   singletons: {
     homepageEN: Singletons.Homepage("en"),
     aboutEN: Singletons.About("en"),
+    contactEN: Singletons.Contact("en"),
   },
   collections: {
     blogEN: Collections.Blog("en"),

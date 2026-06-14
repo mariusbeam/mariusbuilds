@@ -119,17 +119,17 @@
 @layer components {
 	.h1 {
 		font-family: var(--font-heading);
-		@apply text-base-900 dark:text-white text-3xl leading-tight font-bold tracking-tight lg:text-5xl lg:leading-tight;
+		@apply text-base-900 dark:text-white text-3xl leading-tight font-semibold tracking-tight lg:text-5xl lg:leading-tight;
 	}
 
 	.h2 {
 		font-family: var(--font-heading);
-		@apply text-base-900 dark:text-white text-3xl leading-tight font-bold tracking-tight md:text-4xl;
+		@apply text-base-900 dark:text-white text-3xl leading-tight font-semibold tracking-tight md:text-4xl;
 	}
 
 	.h3 {
 		font-family: var(--font-heading);
-		@apply text-base-900 dark:text-white text-xl leading-tight font-bold tracking-tight md:text-2xl;
+		@apply text-base-900 dark:text-white text-xl leading-tight font-semibold tracking-tight md:text-2xl;
 	}
 
 	.description {
@@ -158,6 +158,86 @@
 	.surface-primary {
 		@apply bg-primary-500 text-primary-foreground;
 	}
+
+	/* Tally embed: match light iframe theme so browsers don't paint a white canvas on dark pages */
+	.tally-form {
+		color-scheme: light;
+	}
+
+	.tally-form iframe {
+		display: block;
+		width: 100%;
+		background: transparent;
+		color-scheme: light;
+	}
+}
+
+/* vanilla-cookieconsent — match site tokens (dark-first) */
+#cc-main {
+	--cc-font-family: var(--font-sans);
+	--cc-modal-border-radius: var(--radius);
+	--cc-btn-border-radius: var(--radius);
+
+	--cc-bg: var(--color-base-950);
+	--cc-primary-color: var(--color-base-100);
+	--cc-secondary-color: var(--color-base-400);
+
+	--cc-btn-primary-bg: var(--color-primary-500);
+	--cc-btn-primary-color: var(--color-primary-foreground);
+	--cc-btn-primary-border-color: var(--color-primary-500);
+	--cc-btn-primary-hover-bg: var(--color-primary-400);
+	--cc-btn-primary-hover-color: var(--color-primary-foreground);
+	--cc-btn-primary-hover-border-color: var(--color-primary-400);
+
+	--cc-btn-secondary-bg: var(--color-base-900);
+	--cc-btn-secondary-color: var(--color-base-100);
+	--cc-btn-secondary-border-color: var(--color-base-700);
+	--cc-btn-secondary-hover-bg: var(--color-base-800);
+	--cc-btn-secondary-hover-color: var(--color-base-50);
+	--cc-btn-secondary-hover-border-color: var(--color-base-600);
+
+	--cc-separator-border-color: var(--color-base-800);
+	--cc-toggle-on-bg: var(--color-primary-500);
+	--cc-toggle-off-bg: var(--color-base-700);
+	--cc-toggle-on-knob-bg: var(--color-base-950);
+	--cc-toggle-off-knob-bg: var(--color-base-300);
+	--cc-toggle-enabled-icon-color: var(--color-base-950);
+	--cc-toggle-disabled-icon-color: var(--color-base-500);
+	--cc-toggle-readonly-bg: var(--color-base-800);
+	--cc-toggle-readonly-knob-bg: var(--color-base-500);
+	--cc-toggle-readonly-knob-icon-color: var(--color-base-700);
+
+	--cc-section-category-border: var(--color-base-800);
+	--cc-cookie-category-block-bg: var(--color-base-900);
+	--cc-cookie-category-block-border: var(--color-base-800);
+	--cc-cookie-category-block-hover-bg: var(--color-base-800);
+	--cc-cookie-category-block-hover-border: var(--color-base-700);
+	--cc-cookie-category-expanded-block-bg: var(--color-base-900);
+	--cc-cookie-category-expanded-block-hover-bg: var(--color-base-800);
+
+	--cc-overlay-bg: rgba(0, 0, 0, 0.78);
+	--cc-webkit-scrollbar-bg: var(--color-base-900);
+	--cc-webkit-scrollbar-hover-bg: var(--color-base-700);
+
+	--cc-footer-bg: var(--color-base-900);
+	--cc-footer-color: var(--color-base-400);
+	--cc-footer-border-color: var(--color-base-800);
+}
+
+#cc-main .cm,
+#cc-main .pm {
+	border: 1px solid var(--color-base-800);
+}
+
+/* Blocking overlay: dim + blur page behind consent and preferences modals */
+#cc-main.disable--interaction .cm-wrapper::before,
+#cc-main .pm-overlay {
+	backdrop-filter: blur(6px);
+	-webkit-backdrop-filter: blur(6px);
+}
+
+#cc-main .cm--box {
+	max-width: 32rem;
 }
 
 @layer utilities {

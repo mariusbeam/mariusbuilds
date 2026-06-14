@@ -6,7 +6,6 @@ import BaseLayout from "@layouts/BaseLayout.astro";
 import ToolCard from "@components/ToolCard/ToolCard.astro";
 import ToolTagCloud from "@components/ToolTagCloud/ToolTagCloud.astro";
 import Badge from "@components/Badge/Badge.astro";
-import Button from "@components/Button/Button.astro";
 
 import { getAllTools, filterToolsByTag } from "@js/toolsUtils";
 import { getTranslatedData } from "@js/translationUtils";
@@ -65,11 +64,5 @@ const tools = activeTag ? filterToolsByTag(allTools, activeTag) : allTools;
         </p>
       )
     }
-
-    <div class="mt-16 flex justify-center">
-      <Button variant="primary" class="!inline-flex !w-auto" href="/contact">
-        Let's talk
-      </Button>
-    </div>
   </section>
 </BaseLayout>

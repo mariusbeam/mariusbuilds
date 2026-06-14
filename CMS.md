@@ -41,6 +41,7 @@ Each tool can have **Tags** (e.g. `free`, `indie`, `ai`). They appear as filter 
 | **Services** | Long-form service pages. Tick **Show on homepage** to appear in “My main services”. | `/services/[slug]/` |
 | **Homepage (EN)** | Hero, all section titles/descriptions, blog & tools blurbs, bottom CTA button. | `/` |
 | **About (EN)** | About page hero, story paragraphs, bottom CTA, SEO title & description. | `/about/` |
+| **Contact (EN)** | Contact page hero, Tally form embed code, SEO title & description. | `/contact/` |
 | **Homepage — Belief cards (EN)** | Icon cards in “What I believe”. | `/` |
 | **Homepage — How I work cards (EN)** | Step cards in “How I work”. | `/` |
 | **Favourite tools** | Mini directory: name, URL, one-line blurb, optional category. **Not** blog posts. | `/tools/` |
@@ -77,6 +78,7 @@ Keystatic writes to:
 
 - `src/data/homepage/` — homepage singleton (`en/index.yaml`)
 - `src/data/about/` — about page singleton (`en/index.yaml`)
+- `src/data/contact/` — contact page singleton (`en/index.yaml`)
 - `src/data/blog/`
 - `src/data/work/`
 - `src/data/tools/` (YAML)

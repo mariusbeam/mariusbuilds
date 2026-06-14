@@ -5,6 +5,11 @@
  */
 import ServiceCard from "@components/ServiceCard/ServiceCardIcon.astro";
 import Badge from "@components/Badge/Badge.astro";
+import Button from "@components/Button/Button.astro";
+
+// utils
+import { getLocaleFromUrl } from "@js/localeUtils";
+import { getLocalizedRoute } from "@js/translationUtils";
 
 interface ServiceItem {
   icon: string;
@@ -20,6 +25,7 @@ interface SectionContent {
   description?: string;
   items: ServiceItem[];
   buttonText?: string;
+  buttonHref?: string;
 }
 
 interface Props {
@@ -55,6 +61,8 @@ const themeDefault: SectionContent = {
 
 const { content = themeDefault } = Astro.props as Props;
 const buttonText = content.buttonText ?? "Learn more";
+const buttonHref = content.buttonHref ?? "/contact";
+const currLocale = getLocaleFromUrl(Astro.url);
 ---
 
 <section id="services-icon" class="py-24 md:py-28">
@@ -78,7 +86,6 @@ const buttonText = content.buttonText ?? "Learn more";
             text={feature.text}
             illustration={feature.illustration}
             href={feature.href}
-            buttonText={buttonText}
             idx={idx}
             data-mos="zoom-in"
             data-mos-delay={0.15 * idx}
@@ -86,6 +93,11 @@ const buttonText = content.buttonText ?? "Learn more";
           />
         ))
       }
+    </div>
+    <div class="mt-10 flex justify-center" data-mos="fade-up" data-mos-anchor="#services-icon-cards">
+      <Button href={getLocalizedRoute(currLocale, buttonHref)} variant="outline" arrow="right">
+        {buttonText}
+      </Button>
     </div>
   </div>
 </section>

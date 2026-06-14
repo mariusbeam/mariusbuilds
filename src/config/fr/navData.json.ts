@@ -6,22 +6,18 @@ import { type navItem } from "../types/configDataTypes";
 
 const navConfig: navItem[] = [
   {
-    text: "Work",
-    link: "/work",
-  },
-  {
     text: "How can I help you?",
     dropdown: [
       {
-        text: "Custom tools and web apps",
+        text: "Custom tools",
         link: "/services/custom-tools",
       },
       {
-        text: "AI consultancy and automation",
+        text: "AI consultancy",
         link: "/services/ai-consultancy",
       },
       {
-        text: "Custom websites you actually own",
+        text: "Websites",
         link: "/services/custom-websites",
       },
     ],

@@ -5,7 +5,7 @@ import { type CollectionEntry } from "astro:content";
 import BaseHead from "@layouts/BaseHead.astro";
 import Nav from "@components/Nav/Nav.astro";
 import Footer from "@components/Footer/Footer.astro";
-import CookieConsent from "@components/CookieConsent/CookieConsent.astro";
+import CookieBanner from "@components/CookieConsent/CookieBanner.astro";
 
 // style import
 import "@/styles/global.css";
@@ -56,7 +56,7 @@ const currLocale = getLocaleFromUrl(Astro.url);
   </head>
   <body id="body" class={` ${siteSettings.useAnimations === true ? "use-animations" : ""}`}>
     <!-- put cookie consent first so it is seen first by screen readers -->
-    <!-- <CookieConsent /> -->
+    <CookieBanner />
     <div class="min-h-[100lvh]">
       <Nav />
       <main>

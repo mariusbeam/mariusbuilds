@@ -1,0 +1,24 @@
+---
+/**
+ * Renders a Tally.so embed from CMS-provided iframe HTML.
+ * The Tally loader script is included once per page; strip any <script> from embedCode.
+ */
+
+interface Props {
+  embedCode: string;
+}
+
+const { embedCode } = Astro.props;
+
+const iframeHtml = embedCode
+  .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, "")
+  .trim();
+---
+
+<div class="tally-form mx-auto w-full max-w-[320px]" style="color-scheme: light">
+  <Fragment set:html={iframeHtml} />
+</div>
+
+<script is:inline>
+  var d=document,w="https://tally.so/widgets/embed.js",v=function(){"undefined"!=typeof Tally?Tally.loadEmbeds():d.querySelectorAll("iframe[data-tally-src]:not([src])").forEach((function(e){e.src=e.dataset.tallySrc}))};if("undefined"!=typeof Tally)v();else if(d.querySelector('script[src="'+w+'"]')==null){var s=d.createElement("script");s.src=w,s.onload=v,s.onerror=v,d.body.appendChild(s);}
+</script>

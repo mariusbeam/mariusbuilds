@@ -87,6 +87,22 @@ const homepageTextBlockSchema = z.object({
   href: z.string(),
 });
 
+// contact page copy and Tally form embed — one YAML file per locale
+const contactCollection = defineCollection({
+  loader: glob({ pattern: "**/index.{yaml,yml}", base: "./src/data/contact" }),
+  schema: z.object({
+    metaTitle: z.string().optional(),
+    metaDescription: z.string(),
+    hero: z.object({
+      title: z.string(),
+      description: z.string(),
+    }),
+    tallyForm: z.object({
+      embedCode: z.string(),
+    }),
+  }),
+});
+
 // about page copy — one YAML file per locale
 const aboutCollection = defineCollection({
   loader: glob({ pattern: "**/index.{yaml,yml}", base: "./src/data/about" }),
@@ -216,6 +232,7 @@ export const collections = {
   work: workCollection,
   tools: toolsCollection,
   homepage: homepageCollection,
+  contact: contactCollection,
   about: aboutCollection,
   beliefs: beliefsCollection,
   howIWork: howIWorkCollection,

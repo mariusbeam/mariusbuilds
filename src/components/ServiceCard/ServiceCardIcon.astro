@@ -1,31 +1,27 @@
 ---
 /**
- * Dark card with illustration, number badge, title, text, link, and button.
+ * Dark card with illustration, title, text, and link.
  * Matches the card style proof design for the services section.
  *
  * When `illustration` is provided, renders a custom SVG instead of the Tabler icon.
  */
-
-// components
-import Button from "@components/Button/Button.astro";
 
 // utils
 import { getLocaleFromUrl } from "@js/localeUtils";
 import { getLocalizedRoute } from "@js/translationUtils";
 
 interface Props {
-  icon: string;
+  icon?: string;
   illustration?: string;
   cardNumber?: string;
   title: string;
   text: string;
   href: string;
-  buttonText?: string;
   idx: number;
   rest?: any;
 }
 
-const { illustration, title, text, href, buttonText = "Learn more", ...rest } = Astro.props as Props;
+const { illustration, title, text, href, ...rest } = Astro.props as Props;
 
 const currLocale = getLocaleFromUrl(Astro.url);
 ---
@@ -43,16 +39,9 @@ const currLocale = getLocaleFromUrl(Astro.url);
     )}
 
     {/* Title + text */}
-    <div class="flex flex-1 flex-col gap-2">
+    <div class="flex flex-col gap-2">
       <h3 class="text-lg font-bold text-[#fdbb3e] leading-snug">{title}</h3>
       <p class="text-sm text-white/80 leading-relaxed">{text}</p>
-    </div>
-
-    {/* Button */}
-    <div class="mt-auto flex justify-start pt-2">
-      <Button variant="outline" arrow="right">
-        {buttonText} <span class="sr-only">about {title}</span>
-      </Button>
     </div>
   </a>
 </div>

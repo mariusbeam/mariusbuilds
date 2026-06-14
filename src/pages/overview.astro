@@ -3,7 +3,6 @@
 import BaseLayout from "@layouts/BaseLayout.astro";
 
 // components
-import Button from "@components/Button/Button.astro";
 import Badge from "@components/Badge/Badge.astro";
 
 // utils
@@ -83,8 +82,10 @@ const overview__link =
         <!-- Widgets -->
         <div class="flex flex-col">
           <h3 class={overview__heading}>Widgets</h3>
-          <!-- CookieConsent component should be used in BaseLayout.astro if desired -->
-          <button id="test-consent-demo-btn" class={overview__link}>Cookie Consent</button>
+          <!-- CookieBanner is enabled in BaseLayout.astro -->
+          <button type="button" data-cc="show-preferencesModal" class={overview__link}
+            >Cookie preferences</button
+          >
         </div>
 
         <!-- Other -->
@@ -105,61 +106,5 @@ const overview__link =
         </div>
       </div>
     </div>
-
-    <!-- CookieConsent component should be used in BaseLayout.astro if desired -->
-    <div id="test-banner" class="fixed inset-x-6 bottom-6 z-50 hidden justify-center">
-      <div
-        class="border-base-200 bg-base-50 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 rounded-md border p-4"
-      >
-        <div class="text-center">
-          <p class="text-base-500 text-sm font-medium lg:text-base">
-            We use cookies to improve your experience on this site. To learn more, see our <a
-              href={getLocalizedRoute(currLocale, "/privacy-policy")}
-              class="text-base-700 decoration-primary-500 hover:text-primary-500 underline transition"
-              >Privacy Policy</a
-            >.
-          </p>
-        </div>
-        <div class="mx-auto flex gap-2">
-          <Button variant="primary" type="button">Accept</Button>
-          <Button variant="ghost" type="button">Decline</Button>
-        </div>
-      </div>
-    </div>
   </section>
 </BaseLayout>
-
-<script>
-  //Script purely for demo of the CookieConsent component. Use the actual <CookieConsent /> component in BaseLayout.astro if desired.
-  function cookieConsentSetup() {
-    const cookieBanner = document.getElementById("test-banner");
-    const acceptButton = document.querySelector("#test-banner button:first-of-type");
-    const declineButton = document.querySelector("#test-banner button:last-of-type");
-    const cookieConsentDemoBtn = document.getElementById("test-consent-demo-btn");
-
-    cookieConsentDemoBtn?.addEventListener("click", () => {
-      cookieBanner?.classList.toggle("hidden");
-      cookieBanner?.classList.toggle("flex");
-    });
-
-    // If the user clicks the accept button, hide the banner and set a cookie
-    acceptButton?.addEventListener("click", () => {
-      console.log("cookies accepted example");
-      cookieBanner?.classList.toggle("hidden");
-      cookieBanner?.classList.toggle("flex");
-    });
-
-    // If the user clicks the decline button, hide the banner and set a cookie
-    declineButton?.addEventListener("click", () => {
-      console.log("cookies declined example");
-      cookieBanner?.classList.toggle("hidden");
-      cookieBanner?.classList.toggle("flex");
-    });
-  }
-
-  // runs on initial page load
-  cookieConsentSetup();
-
-  // runs on view transitions navigation
-  document.addEventListener("astro:after-swap", cookieConsentSetup);
-</script>

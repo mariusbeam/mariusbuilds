@@ -20,7 +20,7 @@ const siteData: SiteDataProps = {
   author: {
     name: "Cosmic Themes",
     email: "creator@cosmicthemes.com",
-    twitter: "Cosmic_Themes",
+    twitter: "mariusblds",
   },
 
   // default image for meta tags if the page doesn't have an image already

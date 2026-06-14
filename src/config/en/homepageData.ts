@@ -44,6 +44,7 @@ export const homepageData = {
       },
     ],
     buttonText: "Book a call",
+    buttonHref: "/contact",
   },
   faq: {
     badge: "FAQ",

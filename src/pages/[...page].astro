@@ -6,6 +6,7 @@ import BaseLayout from "@layouts/BaseLayout.astro";
 
 // components
 import ExternalLink from "@components/MarkdownComponents/ExternalLink.astro";
+import CookieSettingsPanel from "@components/CookieConsent/CookieSettingsPanel.astro";
 
 // utils
 import { filterCollectionByLanguage } from "@js/localeUtils";
@@ -45,6 +46,9 @@ const page = Astro.props as CollectionEntry<"otherPages">;
 // convert markdown to html
 const { Content } = await render(page);
 const { title, description } = page.data;
+
+const isCookiePolicy = page.id === "cookie-policy" || page.id.endsWith("/cookie-policy");
+const pageLocale = page.id.startsWith("fr/") ? "fr" : "en";
 ---
 
 <BaseLayout title={title} description={description}>
@@ -55,7 +59,13 @@ const { title, description } = page.data;
       <h1 class="h1">{title}</h1>
     </div>
     <div class="mx-auto max-w-3xl">
-      <div class="text-base-content markdown-content mt-10 max-w-none text-sm md:text-base">
+      {isCookiePolicy && <CookieSettingsPanel locale={pageLocale} />}
+      <div
+        class:list={[
+          "text-base-content markdown-content max-w-none text-sm md:text-base",
+          isCookiePolicy ? "mt-0" : "mt-10",
+        ]}
+      >
         <Content components={{ a: ExternalLink }} />
       </div>
     </div>

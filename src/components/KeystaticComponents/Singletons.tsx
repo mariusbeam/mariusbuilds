@@ -78,8 +78,8 @@ const Homepage = (locale: (typeof locales)[number]) =>
             multiline: true,
           }),
           buttonText: fields.text({
-            label: "Card button text",
-            description: 'Shown on each service card, e.g. "Book a call"',
+            label: "Button text",
+            description: 'Shown below the service cards, e.g. "Book a call"',
             validation: { isRequired: true },
           }),
           buttonHref: linkField("Bottom button link", "/contact"),
@@ -177,7 +177,53 @@ const About = (locale: (typeof locales)[number]) =>
     },
   });
 
+/** Contact page copy and Tally form embed (EN). */
+const Contact = (locale: (typeof locales)[number]) =>
+  singleton({
+    label: `Contact (${locale.toUpperCase()})`,
+    path: `src/data/contact/${locale}/`,
+    format: { data: "yaml" },
+    schema: {
+      metaTitle: fields.text({
+        label: "Page title (browser tab)",
+        description: 'e.g. "Contact | mariusbuilds.com". Leave blank to use the default.',
+      }),
+      metaDescription: fields.text({
+        label: "Meta description (SEO)",
+        multiline: true,
+        validation: { isRequired: true },
+      }),
+      hero: fields.object(
+        {
+          title: fields.text({
+            label: "Headline (H1)",
+            validation: { isRequired: true },
+          }),
+          description: fields.text({
+            label: "Intro paragraph",
+            multiline: true,
+            validation: { isRequired: true },
+          }),
+        },
+        { label: "Hero" },
+      ),
+      tallyForm: fields.object(
+        {
+          embedCode: fields.text({
+            label: "Tally form embed code",
+            multiline: true,
+            description:
+              "Paste the Tally iframe embed from tally.so. The loader script is added automatically — you only need the <iframe> tag.",
+            validation: { isRequired: true },
+          }),
+        },
+        { label: "Tally form" },
+      ),
+    },
+  });
+
 export default {
   Homepage,
   About,
+  Contact,
 };
