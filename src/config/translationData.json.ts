@@ -1,6 +1,5 @@
 /**
- * * Configuration of the i18n system data files and text translations
- * Example translations below are for English and French, with textTranslations used in src/layouts/BlogLayoutCenter.astro and src/components/Hero/[hero].astro
+ * Configuration of i18n system data files and text translations.
  */
 
 /**
@@ -10,16 +9,12 @@
 import siteDataEn from "./en/siteData.json";
 import navDataEn from "./en/navData.json";
 import faqDataEn from "./en/faqData.json";
-import teamDataEn from "./en/teamData.json";
-import testimonialDataEn from "./en/testimonialData.json";
 
 export const dataTranslations = {
   en: {
     siteData: siteDataEn,
     navData: navDataEn,
     faqData: faqDataEn,
-    teamData: teamDataEn,
-    testimonialData: testimonialDataEn,
   },
 } as const;
 
@@ -33,18 +28,12 @@ export const dataTranslations = {
  * import { useTranslations } from "@js/translationUtils";
  * const currLocale = getLocaleFromUrl(Astro.url);
  * const t = useTranslations(currLocale);
- * t("back_to_all_posts"); // this would be "Retour à tous les articles" if the current locale is "fr"
- * ```
- * or
- * ```ts
- * import { useTranslations } from "@js/translationUtils";
- * const t = useTranslations("fr");
- * t("back_to_all_posts"); // this would be "Retour à tous les articles"
+ * t("back_to_all_posts");
  * ```
  */
 export const textTranslations = {
   en: {
-    // Hero on `/` comes from Keystatic → Homepage (EN). These strings are for theme demo pages only.
+    // Hero on `/` comes from Keystatic → Homepage (EN).
     hero_badge: "Hi, I'm Marius",
     hero_text: "AI Automation Consultant and Web Developer for Small Businesses",
     hero_description:

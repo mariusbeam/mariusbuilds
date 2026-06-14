@@ -1,11 +1,12 @@
 ---
 /**
- * CTA split card. Theme demo defaults — pass `content` from the page for real copy.
+ * CTA split card. Pass `content` from the page; falls back to homepage bottom CTA copy.
  */
 
 import { Icon } from "astro-icon/components";
 
 import Button from "@components/Button/Button.astro";
+import homepageFallback from "@/config/en/homepageData";
 
 import { getLocaleFromUrl } from "@js/localeUtils";
 import { getLocalizedRoute } from "@js/translationUtils";
@@ -21,14 +22,7 @@ interface Props {
   content?: CtaContent;
 }
 
-const themeDefault: CtaContent = {
-  title: "What are you waiting for? Get started today.",
-  description: "Level up with this theme.",
-  cta: "Get Atlas",
-  href: "https://cosmicthemes.com/themes/atlas/",
-};
-
-const { content = themeDefault } = Astro.props as Props;
+const { content = homepageFallback.bottomCta } = Astro.props as Props;
 const currLocale = getLocaleFromUrl(Astro.url);
 const isExternal = content.href.startsWith("http");
 ---

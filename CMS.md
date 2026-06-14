@@ -147,6 +147,6 @@ After you save in Cloud, Keystatic commits to GitHub → Netlify rebuilds → th
 
 ### 5. Config in this repo
 
-`keystatic.config.tsx` reads `KEYSTATIC_CLOUD_PROJECT` in production. Until you set it on Netlify, it falls back to the theme demo (`cosmic-themes/atlas`) — that is **not** your site. Always set your own project ID before relying on live `/keystatic`.
+`keystatic.config.tsx` reads `KEYSTATIC_CLOUD_PROJECT` in production. The default fallback is `mariusbuilds/mariusbuilds` — set your own project ID on Netlify if it differs.
 
 See also `.env.example`.

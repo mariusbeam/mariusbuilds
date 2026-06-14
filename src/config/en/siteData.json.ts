@@ -1,32 +1,27 @@
 import { type SiteDataProps } from "../types/configDataTypes";
 
-// Update this file with your site specific information
 const siteData: SiteDataProps = {
   name: "mariusbuilds.com",
-  // Your website's title and description (meta fields)
   title: "mariusbuilds.com",
   description:
     "Hi, I'm Marius. I build custom tools, web apps, and AI-powered things for small businesses that need something specific.",
 
-  // used on contact page and footer
   contact: {
-    address1: "1234 Main Street",
-    address2: "New York, NY 10001",
-    phone: "(123) 456-7890",
-    email: "creator@cosmicthemes.com",
+    address1: "Netherlands",
+    address2: "",
+    phone: "",
+    email: "reach@beamlight.me",
   },
 
-  // Your information for blog post purposes
   author: {
-    name: "Cosmic Themes",
-    email: "creator@cosmicthemes.com",
+    name: "Marius Rusulet",
+    email: "marius@mariusbuilds.com",
     twitter: "mariusblds",
   },
 
-  // default image for meta tags if the page doesn't have an image already
   defaultImage: {
-    src: "/images/cosmic-themes-logo.jpg",
-    alt: "Cosmic Themes logo",
+    src: "/favicons/apple-touch-icon.png",
+    alt: "Marius Rusulet",
   },
 };
 

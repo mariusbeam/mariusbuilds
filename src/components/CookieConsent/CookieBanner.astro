@@ -3,24 +3,12 @@
   import * as CookieConsent from "vanilla-cookieconsent";
   import { getCookieConsentConfig } from "@js/cookieconsent-config";
 
-  function getLocale(): "en" | "fr" {
-    const [, lang] = location.pathname.split("/");
-    return lang === "fr" ? "fr" : "en";
-  }
-
   let initialized = false;
 
   function init() {
-    const locale = getLocale();
-
     if (!initialized) {
-      CookieConsent.run(getCookieConsentConfig(locale));
+      CookieConsent.run(getCookieConsentConfig());
       initialized = true;
-      return;
-    }
-
-    if (CookieConsent.validConsent()) {
-      CookieConsent.setLanguage(locale);
     }
   }
 

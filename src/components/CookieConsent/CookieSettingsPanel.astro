@@ -1,26 +1,5 @@
 ---
 import Button from "@components/Button/Button.astro";
-
-interface Props {
-  locale?: "en" | "fr";
-}
-
-const { locale = "en" } = Astro.props;
-
-const copy =
-  locale === "fr"
-    ? {
-        title: "Préférences cookies",
-        description:
-          "Acceptez, refusez ou modifiez les catégories de cookies à tout moment. Les cookies strictement nécessaires restent toujours actifs.",
-        button: "Ouvrir les préférences cookies",
-      }
-    : {
-        title: "Manage cookie preferences",
-        description:
-          "Accept, decline, or change cookie categories at any time. Strictly necessary cookies always stay on.",
-        button: "Open cookie settings",
-      };
 ---
 
 <aside
@@ -28,12 +7,15 @@ const copy =
   aria-labelledby="cookie-settings-panel-title"
 >
   <h2 id="cookie-settings-panel-title" class="text-base-50 text-lg font-semibold md:text-xl">
-    {copy.title}
+    Manage cookie preferences
   </h2>
-  <p class="text-base-300 mt-2 text-sm leading-relaxed md:text-base">{copy.description}</p>
+  <p class="text-base-300 mt-2 text-sm leading-relaxed md:text-base">
+    Accept, decline, or change cookie categories at any time. Strictly necessary cookies always
+    stay on.
+  </p>
   <div class="mt-5">
     <Button type="button" variant="primary" data-cc="show-preferencesModal">
-      {copy.button}
+      Open cookie settings
     </Button>
   </div>
 </aside>

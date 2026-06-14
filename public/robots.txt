@@ -1,1 +1,10 @@
-Sitemap: https://atlas.cosmicthemes.com/sitemap-index.xml
+User-agent: *
+Allow: /
+
+# CMS admin and theme demo pages — not for indexing
+Disallow: /keystatic/
+Disallow: /examples/
+Disallow: /overview
+Disallow: /elements
+
+Sitemap: https://mariusbuilds.com/sitemap-index.xml

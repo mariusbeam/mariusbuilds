@@ -48,7 +48,6 @@ const { Content } = await render(page);
 const { title, description } = page.data;
 
 const isCookiePolicy = page.id === "cookie-policy" || page.id.endsWith("/cookie-policy");
-const pageLocale = page.id.startsWith("fr/") ? "fr" : "en";
 ---
 
 <BaseLayout title={title} description={description}>
@@ -59,7 +58,7 @@ const pageLocale = page.id.startsWith("fr/") ? "fr" : "en";
       <h1 class="h1">{title}</h1>
     </div>
     <div class="mx-auto max-w-3xl">
-      {isCookiePolicy && <CookieSettingsPanel locale={pageLocale} />}
+      {isCookiePolicy && <CookieSettingsPanel />}
       <div
         class:list={[
           "text-base-content markdown-content max-w-none text-sm md:text-base",

@@ -60,7 +60,7 @@
   --font-mono:
     "SFMono-Regular", "Menlo", "Monaco", "Consolas", "Liberation Mono", "Courier New", "monospace";
 
-  /* starwind and cosmic themes animations */
+  /* starwind animations */
   --animate-accordion-down: accordion-down 0.3s ease-out;
   --animate-accordion-up: accordion-up 0.3s ease-out;
   --animate-marquee-gallery: marquee 100s linear infinite;

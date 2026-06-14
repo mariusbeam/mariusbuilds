@@ -86,7 +86,7 @@
 		@apply scheme-dark;
 	}
 
-	/* starwind preflight merged with Cosmic Themes */
+	/* starwind preflight */
 	* {
 		@apply border-border;
 	}

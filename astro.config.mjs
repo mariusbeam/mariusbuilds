@@ -70,7 +70,13 @@ export default defineConfig({
     react(),
     icon(),
     keystatic(),
-    sitemap(),
+    sitemap({
+      filter: (page) =>
+        !page.includes("/examples/") &&
+        !page.includes("/overview") &&
+        !page.includes("/elements") &&
+        !page.includes("/keystatic"),
+    }),
     compress({
       HTML: true,
       JavaScript: true,
